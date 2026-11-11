@@ -56,6 +56,11 @@ Other options:
 
 - `wave_ring` - a ring of balls bouncing in a wave. Loops seamlessly.
 - `title_card` - 3D text popping in letter by letter, for intros and outros.
+- `simple_pendulum` - a one-minute physics tutorial: parts, forces, the period
+  formula `T = 2π√(L/g)`, and how mass and length affect the period. Uses the
+  fast flat style, about half a second per frame at `preview`.
+- `lorentz_circle` - a charged particle circling in a magnetic field,
+  `r = mv / qB`.
 
 ## Make your own
 
@@ -72,7 +77,9 @@ def build(scene, fmt):   # add `text=None` to accept --text
 `bvid/scene.py` has the helpers the examples use: `material`, `add_floor`,
 `add_wall`, `add_area_light`, `key` (set and keyframe a property) and
 `add_camera`, which places the camera so a given area stays in frame at any
-aspect ratio.
+aspect ratio. For tutorials there are also `add_arrow`, `add_screen_text`
+(captions), `add_world_text` (labels), `show` (make something visible between
+two times) and `flat_style` (fast rendering for diagram-style scenes).
 
 ## Render time
 

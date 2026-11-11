@@ -1,6 +1,7 @@
 """Scene-building helpers shared by all animations."""
 import colorsys
 import math
+from pathlib import Path
 
 import bpy
 from mathutils import Vector
@@ -149,3 +150,142 @@ def smoothstep(t):
 
 
 TAU = math.tau
+
+
+def emissive(name, color, strength=1.0):
+    """A glowing, unlit material: stays readable whatever the lighting."""
+    mat = bpy.data.materials.new(name)
+    mat.use_nodes = True
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+    em = nodes.new("ShaderNodeEmission")
+    em.inputs["Color"].default_value = (*color, 1.0)
+    em.inputs["Strength"].default_value = strength
+    out = nodes.new("ShaderNodeOutputMaterial")
+    mat.node_tree.links.new(em.outputs[0], out.inputs[0])
+    return mat
+
+
+def add_arrow(start, end, mat, radius=0.04, parent=None):
+    """An arrow from `start` to `end` (coordinates are local to `parent`)."""
+    start, end = Vector(start), Vector(end)
+    axis = end - start
+    length = axis.length
+    head = min(radius * 6, length * 0.5)
+    rot = axis.to_track_quat("Z", "Y").to_euler()
+    unit = axis.normalized()
+
+    bpy.ops.mesh.primitive_cylinder_add(
+        radius=radius, depth=length - head, vertices=24,
+        location=start + unit * (length - head) / 2, rotation=rot)
+    shaft = bpy.context.object
+    bpy.ops.mesh.primitive_cone_add(
+        radius1=radius * 2.6, depth=head, vertices=24,
+        location=end - unit * head / 2, rotation=rot)
+    tip = bpy.context.object
+    for part in (shaft, tip):
+        part.data.materials.append(mat)
+        part.parent = parent
+    return shaft, tip
+
+
+def add_screen_text(scene, fmt, text, x, y, size, mat, align="CENTER"):
+    """Text fixed to the screen, like a caption.
+
+    `x`, `y` run from -1 to 1 across the frame (0, 0 is the centre) and
+    `size` is the letter height as a fraction of the frame width, so the
+    same layout works for every format.
+    """
+    cam = scene.camera
+    depth = 2.0
+    half_sensor = cam.data.sensor_width / 2
+    if fmt.aspect >= 1:
+        tan_h = half_sensor / cam.data.lens
+        tan_v = tan_h / fmt.aspect
+    else:
+        tan_v = half_sensor / cam.data.lens
+        tan_h = tan_v * fmt.aspect
+
+    bpy.ops.object.text_add()
+    obj = bpy.context.object
+    obj.data.body = text
+    obj.data.font = maths_font() or obj.data.font
+    obj.data.align_x = align
+    obj.data.align_y = "CENTER"
+    obj.data.size = size * 2 * tan_h * depth
+    obj.data.materials.append(mat)
+    obj.parent = cam
+    obj.rotation_euler = (0, 0, 0)
+    obj.location = (x * tan_h * depth, y * tan_v * depth, -depth)
+    return obj
+
+
+def pop_in(obj, frame, fps, duration=0.4):
+    """Hide `obj` until `frame`, then scale it up with a small bounce."""
+    key(obj, 1, scale=(0, 0, 0))
+    steps = max(round(duration * fps), 1)
+    for f in range(steps + 1):
+        s = ease_out_back(f / steps)
+        key(obj, frame + f, scale=(s, s, s))
+
+
+# Fonts that include Greek letters and maths symbols (the font built into
+# Blender does not). The first one found is used.
+FONT_CANDIDATES = [
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/usr/share/fonts/dejavu/DejaVuSans.ttf",
+    "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
+    "/Library/Fonts/Arial Unicode.ttf",
+    "C:/Windows/Fonts/seguisym.ttf",
+    "C:/Windows/Fonts/arial.ttf",
+]
+
+
+def maths_font():
+    for path in FONT_CANDIDATES:
+        if Path(path).exists():
+            return bpy.data.fonts.load(path, check_existing=True)
+    return None
+
+
+def add_world_text(text, location, size, mat, parent=None, align="CENTER"):
+    """Text standing in the XZ plane, readable from a camera on the -Y side."""
+    bpy.ops.object.text_add()
+    obj = bpy.context.object
+    obj.data.body = text
+    obj.data.font = maths_font() or obj.data.font
+    obj.data.align_x = align
+    obj.data.align_y = "CENTER"
+    obj.data.size = size
+    obj.data.materials.append(mat)
+    obj.parent = parent
+    obj.rotation_euler = (math.pi / 2, 0, 0)
+    obj.location = location
+    return obj
+
+
+def pop_out(obj, frame, fps, duration=0.25):
+    """Shrink `obj` away, finishing at `frame`."""
+    steps = max(round(duration * fps), 1)
+    for f in range(steps + 1):
+        s = 1.0 - smoothstep(f / steps)
+        key(obj, frame - steps + f, scale=(s, s, s))
+
+
+def show(obj, start, end, fps):
+    """Make `obj` visible only between `start` and `end` (in seconds).
+    `end=None` keeps it until the video finishes."""
+    pop_in(obj, 1 + round(start * fps), fps)
+    if end is not None:
+        pop_out(obj, 1 + round(end * fps), fps)
+
+
+def flat_style(scene):
+    """Fast render settings for scenes made only of emissive materials:
+    no light bounces to trace, so a few samples give a clean image."""
+    scene.cycles.samples = min(scene.cycles.samples, 12)
+    scene.cycles.use_denoising = False
+    scene.cycles.max_bounces = 0
+    scene.render.film_transparent = False
+    scene.view_settings.view_transform = "Standard"
+    scene.view_settings.look = "None"
