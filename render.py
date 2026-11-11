@@ -54,14 +54,24 @@ def main():
     fmt, quality = FORMATS[args.format], QUALITIES[args.quality]
     anim = importlib.import_module(f"animations.{args.animation}")
 
-    scene = S.reset_scene(fmt, quality, anim.SECONDS)
-    if args.text is not None:
-        anim.build(scene, fmt, text=args.text)
-    else:
-        anim.build(scene, fmt)
-
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
+
+    # Narrated animations list their sentences; the voice track sets the
+    # length of the video and the timing of the visuals.
+    kwargs, audio, seconds = {}, args.audio, getattr(anim, "SECONDS", None)
+    if hasattr(anim, "NARRATION"):
+        from bvid import narration
+        timeline = narration.prepare(anim.NARRATION,
+                                     out / "audio" / args.animation)
+        kwargs["timeline"] = timeline
+        seconds = timeline.total
+        audio = audio or timeline.audio
+    if args.text is not None:
+        kwargs["text"] = args.text
+
+    scene = S.reset_scene(fmt, quality, seconds)
+    anim.build(scene, fmt, **kwargs)
     stem = f"{args.animation}_{fmt.name}_{quality.name}"
 
     if args.save_blend:
@@ -81,7 +91,7 @@ def main():
     bpy.ops.render.render(animation=True)
 
     video = encode(frames / "f_%04d.png", out / f"{stem}.mp4", fmt.fps,
-                   crf=quality.crf, loops=args.loops, audio=args.audio)
+                   crf=quality.crf, loops=args.loops, audio=audio)
     print(f"\nSaved {video}")
 
 

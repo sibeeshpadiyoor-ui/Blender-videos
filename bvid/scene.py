@@ -289,3 +289,23 @@ def flat_style(scene):
     scene.render.film_transparent = False
     scene.view_settings.view_transform = "Standard"
     scene.view_settings.look = "None"
+
+
+def add_box(width, height, location, mat, depth=0.1, parent=None):
+    """A flat bar or block in the XZ plane, `width` across and `height` tall."""
+    bpy.ops.mesh.primitive_cube_add(size=1, location=location)
+    obj = bpy.context.object
+    obj.scale = (width, depth, height)
+    bpy.ops.object.transform_apply(scale=True)
+    obj.data.materials.append(mat)
+    obj.parent = parent
+    return obj
+
+
+def move(obj, start, end, to, fps):
+    """Glide `obj` from where it is to `to` between two times (seconds)."""
+    origin = Vector(obj.location)
+    first, last = 1 + round(start * fps), 1 + round(end * fps)
+    for frame in range(first, last + 1):
+        t = smoothstep((frame - first) / max(last - first, 1))
+        key(obj, frame, location=origin.lerp(Vector(to), t))
