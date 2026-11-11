@@ -296,7 +296,7 @@ def add_box(width, height, location, mat, depth=0.1, parent=None):
     bpy.ops.mesh.primitive_cube_add(size=1, location=location)
     obj = bpy.context.object
     obj.scale = (width, depth, height)
-    bpy.ops.object.transform_apply(scale=True)
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     obj.data.materials.append(mat)
     obj.parent = parent
     return obj
