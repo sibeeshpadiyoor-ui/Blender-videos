@@ -14,6 +14,7 @@ import bpy
 from . import scene as S
 
 NAME = "BEYOND THE OBVIOUS PHYSICS"
+SERIES = "Physics, One Idea at a Time"     # the Halliday & Resnick series
 WATERMARK = Path(__file__).resolve().parent.parent / "assets/brand/watermark.png"
 
 HEX = dict(

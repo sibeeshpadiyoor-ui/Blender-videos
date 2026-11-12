@@ -4,7 +4,7 @@ Script: scripts/ch01/01-what-is-measurement.md
 Visuals are cued to the start of each narration sentence. A sentence
 written as (text, seconds) is followed by that much extra silence.
 """
-from bvid.brand import Stage
+from bvid.brand import SERIES, Stage
 
 NARRATION = [
     "This table is two long.",                                       # 0
