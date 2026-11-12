@@ -33,7 +33,7 @@ TABLE = 4.0     # table length in scene units; it stands for 2 meters
 def build(scene, fmt, timeline):
     tl = timeline
     st = Stage(scene, fmt)
-    st.headline(["What is"], "Measuring?", tag="Ch 1 • Measurement")
+    st.headline(["What is"], "Measuring?", tag=f"{SERIES} • Ch 1")
     st.subtitles(tl)
 
     # The table stays until the challenge.
