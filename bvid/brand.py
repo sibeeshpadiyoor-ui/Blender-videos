@@ -162,10 +162,11 @@ class Stage:
         return obj
 
     def label(self, text, x, z, size, color="fg", start=None, end=None,
-              font="bold"):
-        """Text placed in the scene, next to the objects."""
-        obj = S.add_world_text(text, (x, 0, z), size, self.mat(color),
-                               font=font)
+              font="bold", align="CENTER", front=0.0):
+        """Text placed in the scene, next to the objects. Use `front` to
+        bring text in front of a box it is written on."""
+        obj = S.add_world_text(text, (x, -front, z), size, self.mat(color),
+                               font=font, align=align)
         if start is not None:
             self.show(obj, start, end)
         return obj
@@ -188,7 +189,7 @@ class Stage:
                                 font="body", align="LEFT", x=-0.88)
             tag_obj.data.space_character = 1.3
 
-    def subtitles(self, timeline, width=30):
+    def subtitles(self, timeline, width=34):
         """The spoken sentence at the bottom of the screen, on a dark box."""
         tan_h, tan_v = S.view_tangents(self.cam, self.fmt)
         for i, sentence in enumerate(timeline.sentences):
@@ -197,7 +198,7 @@ class Stage:
             end = timeline.end(i) + 0.3
             if i + 1 < len(timeline.sentences):
                 end = min(end, timeline.start(i + 1) - 0.1)
-            obj = self.text("\n".join(lines), -0.80, 0.042, "fg",
+            obj = self.text("\n".join(lines), -0.78, 0.042, "fg",
                             font="body")
             obj.data.space_line = 1.15
             bpy.context.view_layer.update()      # measure before animating
@@ -205,7 +206,7 @@ class Stage:
             w = obj.dimensions.x / frame_w + 0.07 * self.column
             h = obj.dimensions.y / frame_h + 0.03
             self.show(obj, start, end, duration=0.15)
-            panel = self._screen_plane(0, -0.80, w, h, 2.02, self.mat("panel"))
+            panel = self._screen_plane(0, -0.78, w, h, 2.02, self.mat("panel"))
             panel_scale = tuple(panel.scale)
             holder = bpy.data.objects.new("SubtitleBox", None)
             self.scene.collection.objects.link(holder)
