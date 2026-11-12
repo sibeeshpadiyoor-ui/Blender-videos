@@ -41,6 +41,9 @@ def parse_args():
     p.add_argument("--audio", help="music/voice file to add to the video")
     p.add_argument("--still", type=int, metavar="FRAME",
                    help="render only this frame as a PNG (quick look)")
+    p.add_argument("--resume", action="store_true",
+                   help="continue an interrupted render: keep frames already "
+                        "rendered instead of starting over")
     p.add_argument("--save-blend", action="store_true",
                    help="also save a .blend to open and tweak in Blender")
     p.add_argument("--out", default=str(ROOT / "output"))
@@ -85,8 +88,14 @@ def main():
         return
 
     frames = out / "frames" / stem
-    shutil.rmtree(frames, ignore_errors=True)
-    frames.mkdir(parents=True)
+    if args.resume and frames.exists():
+        done = sorted(frames.glob("f_*.png"))
+        if done:
+            done[-1].unlink()        # the last frame may be half written
+        scene.render.use_overwrite = False
+    else:
+        shutil.rmtree(frames, ignore_errors=True)
+        frames.mkdir(parents=True)
     scene.render.filepath = str(frames / "f_")
     bpy.ops.render.render(animation=True)
 
