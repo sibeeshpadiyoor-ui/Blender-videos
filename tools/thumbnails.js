@@ -66,13 +66,45 @@ const tall = base(1080, 1920, `
 <div class="gold" style="position:absolute;left:0;right:0;top:1140px;text-align:center;font-size:150px">clearly?</div>
 <div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
 
+// ---- Video 1: "What is measuring?" -- the table that is "two long" ----
+const BLUE = "#4A5BA8";
+const table = (x, y, w, num, two = true) => `
+<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;text-align:center;font-weight:900;font-size:${num}px;line-height:1">
+  ${two ? "<span>2</span>" : ""}<span style="color:#FFB703;margin-left:${two ? num * 0.25 : 0}px">?</span></div>
+<div style="position:absolute;left:${x}px;top:${y + num * 1.15}px;width:${w}px;height:${w * 0.055}px;background:${BLUE}"></div>
+<div style="position:absolute;left:${x + w * 0.08}px;top:${y + num * 1.15 + w * 0.055}px;width:${w * 0.045}px;height:${w * 0.36}px;background:${BLUE}"></div>
+<div style="position:absolute;left:${x + w * 0.875}px;top:${y + num * 1.15 + w * 0.055}px;width:${w * 0.045}px;height:${w * 0.36}px;background:${BLUE}"></div>`;
+
+const wide1 = base(1280, 720, `
+<div class="pill" style="left:70px;top:56px">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:44px;top:34px;width:92px">
+<div style="position:absolute;left:70px;top:170px;line-height:1">
+  <div style="font-size:170px;letter-spacing:-3px">TWO\u2026</div>
+  <div class="gold" style="font-size:190px;margin-top:6px">what?</div>
+</div>
+${table(690, 135, 520, 230, false)}
+<div class="foot" style="bottom:34px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
+const tall1 = base(1080, 1920, `
+<style>.glow{--gx:50%}</style>
+<div class="pill" style="left:50%;transform:translateX(-50%);top:330px;white-space:nowrap">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:60px;top:60px;width:130px">
+<div style="position:absolute;left:0;right:0;top:440px;text-align:center;line-height:1">
+  <div style="font-size:190px;letter-spacing:-3px">TWO\u2026</div>
+  <div class="gold" style="font-size:210px;margin-top:4px">what?</div>
+</div>
+${table(170, 940, 740, 250)}
+<div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
 (async () => {
   const out = path.join(ROOT, "thumbnails");
   fs.mkdirSync(out, { recursive: true });
   const browser = await chromium.launch({ args: ["--no-sandbox"] });
   for (const [name, html, w, h] of [
     ["trailer_youtube_1280x720", wide, 1280, 720],
-    ["trailer_instagram_cover_1080x1920", tall, 1080, 1920]]) {
+    ["trailer_instagram_cover_1080x1920", tall, 1080, 1920],
+    ["ch01_01_youtube_1280x720", wide1, 1280, 720],
+    ["ch01_01_instagram_cover_1080x1920", tall1, 1080, 1920]]) {
     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
     // Load from a real file: a page made with setContent() cannot read the
     // local fonts and logo.

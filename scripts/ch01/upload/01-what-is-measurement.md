@@ -52,3 +52,38 @@ Part of Fundamentals of Physics, from Beyond the Obvious Physics. Based on Halli
 
 **Cover frame:** the frame with "2 ?" over the table (about 3 seconds in).
 **Settings:** upload the same MP4; add captions on (the video already shows them on screen); share to Facebook off unless you want it.
+
+## Short captions (use these when you want less text)
+
+**Instagram (short)**
+```
+"This table is two long." Two... what? 🤔
+A number alone tells us nothing. Measuring means comparing with an agreed unit.
+
+Fundamentals of Physics, Ch 1: one clear idea per video. Follow for the next one 👇
+Challenge: your friend says the road is "5 long". What would you ask?
+
+#physics #learnphysics #measurement #FundamentalsOfPhysics #BeyondTheObviousPhysics
+```
+
+**Instagram (very short)**
+```
+"The table is two long." Two... what? 🤔 Measurement = number × unit. Fundamentals of Physics, Ch 1. Follow 👇
+#physics #learnphysics #FundamentalsOfPhysics
+```
+
+**YouTube title (short, 34 characters):** What Does It Mean to Measure?
+
+**YouTube description (short)**
+```
+"This table is two long." Two... what? A number alone tells us nothing: measuring means comparing with an agreed unit, so every measurement needs a number and a unit.
+Challenge: your friend says the road is "5 long". What would you ask? Tell us below.
+Fundamentals of Physics, Chapter 1. Based on Halliday & Resnick; not affiliated with the publisher.
+#physics #Shorts
+```
+
+**Pinned comment (short):** Challenge: a friend says the road is "5 long". What would you ask? 👇
+
+## Thumbnails
+- YouTube: `thumbnails/ch01_01_youtube_1280x720.png`
+- Instagram cover: `thumbnails/ch01_01_instagram_cover_1080x1920.png`
