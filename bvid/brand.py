@@ -124,15 +124,13 @@ class Stage:
             stars.location = (0, 0, -depth)
             mesh.materials.append(self.mat("fg", strength))
 
-    def _watermark(self):
-        if not WATERMARK.exists():
-            return
-        mat = bpy.data.materials.new("Watermark")
+    def _image_material(self, path, name="Image"):
+        mat = bpy.data.materials.new(name)
         mat.use_nodes = True
         nodes, links = mat.node_tree.nodes, mat.node_tree.links
         nodes.clear()
         image = nodes.new("ShaderNodeTexImage")
-        image.image = bpy.data.images.load(str(WATERMARK), check_existing=True)
+        image.image = bpy.data.images.load(str(path), check_existing=True)
         emission = nodes.new("ShaderNodeEmission")
         clear = nodes.new("ShaderNodeBsdfTransparent")
         mix = nodes.new("ShaderNodeMixShader")
@@ -142,8 +140,29 @@ class Stage:
         links.new(clear.outputs[0], mix.inputs[1])
         links.new(emission.outputs[0], mix.inputs[2])
         links.new(mix.outputs[0], output.inputs[0])
+        return mat
+
+    def _watermark(self):
+        if not WATERMARK.exists():
+            return
+        mat = self._image_material(WATERMARK, "Watermark")
         size = 0.13 * self.column
         self._screen_plane(0.80, 0.905, size, size * self.fmt.aspect, 2.0, mat)
+
+    def image(self, path, x, z, size, start=None, end=None):
+        """A picture (with transparency) standing in the scene, `size` wide."""
+        mat = self._image_material(path)
+        holder = bpy.data.objects.new("Image", None)
+        self.scene.collection.objects.link(holder)
+        holder.location = (x, 0, z)
+        bpy.ops.mesh.primitive_plane_add(size=1, rotation=(S.math.pi / 2, 0, 0))
+        plane = bpy.context.object
+        plane.scale = (size, size, 1)
+        plane.data.materials.append(mat)
+        plane.parent = holder
+        if start is not None:
+            self.show(holder, start, end)
+        return holder
 
     # ----- timing ------------------------------------------------------
     def show(self, obj, start, end=None, duration=0.4):
