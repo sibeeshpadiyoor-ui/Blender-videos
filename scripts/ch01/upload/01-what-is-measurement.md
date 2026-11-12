@@ -1,19 +1,20 @@
-# Ch 1 · Ep 1 upload sheet: What does it mean to measure?
+# Ch 1 · Section 1-1 · Video 1 upload sheet: What does it mean to measure?
 
 **Series:** Fundamentals of Physics (part of the Beyond the Obvious Physics channel)
+**Place in the series:** Chapter 1, Measurement > Section 1-1, Measuring Things > Video 1 of 5
 **Video file:** `output/ch01_01_measure_reels_final.mp4` (render with `--quality final` for 1080x1920)
 **Captions:** `output/ch01_01_measure_reels_final.srt`
 **Length:** about 1:07, vertical. On YouTube this is a Short; on Instagram, a Reel.
-**Playlists:** "Fundamentals of Physics" and "Ch 1: Measurement"
+**Playlists:** "Fundamentals of Physics" (every video) and "Ch 1: Measurement" (this chapter)
 
 ## YouTube
-**Title (69 characters)**
-What Does It Mean to Measure? | Fundamentals of Physics (Ch 1 · Ep 1)
+**Title (67 characters)**
+What Does It Mean to Measure? | Fundamentals of Physics, Ch 1 (1-1)
 
 **Description**
 "This table is two long." Two what? A number on its own tells us nothing. To measure means to compare something with an agreed unit, and that is why every measurement needs a number and a unit.
 
-In this first video of Fundamentals of Physics, a series on the big ideas of introductory physics, we see why measuring is comparing, why hand spans give different answers for the same table, and why the whole world agrees on one standard for each unit.
+In this first video of Fundamentals of Physics, Chapter 1 (Measurement), section 1-1, we see why measuring is comparing, why hand spans give different answers for the same table, and why the whole world agrees on one standard for each unit.
 
 You will learn:
 - what it means to measure
