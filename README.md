@@ -81,6 +81,19 @@ aspect ratio. For tutorials there are also `add_arrow`, `add_screen_text`
 (captions), `add_world_text` (labels), `show` (make something visible between
 two times) and `flat_style` (fast rendering for diagram-style scenes).
 
+## Narration
+
+Narrated animations (those with a `NARRATION` list) use the same voice as the
+Beyond the Obvious Physics channel: Kokoro `am_michael`, speed 0.92. Download
+the two model files (about 350 MB) into `models/` once:
+
+- https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
+- https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+
+Change the voice or pace with `TTS_VOICE=bf_emma` or `TTS_SPEED=0.85`.
+A sentence written as `("text", 1.0)` is followed by one extra second of
+silence. Each render also writes a `.srt` captions file next to the video.
+
 ## Render time
 
 Rendering uses Cycles on the CPU, so it works on any machine, including ones
