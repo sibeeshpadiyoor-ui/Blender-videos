@@ -51,3 +51,39 @@ Part of Fundamentals of Physics, from Beyond the Obvious Physics. Based on Halli
 #physics #physicsexplained #learnphysics #SIunits #science #education #FundamentalsOfPhysics #BeyondTheObviousPhysics
 
 **Cover frame:** the frame with the seven base-quantity rows (about 29 seconds in).
+
+## Short captions (use these when you want less text)
+
+**Instagram (short)**
+```
+Speed. Force. Energy. Pressure. Do we need a separate standard for each? 🤔
+No. Only SEVEN base quantities. Everything else is built from them.
+
+Challenge: which is NOT a base quantity: length, speed, time or mass? 👇
+Next: what is one meter, exactly?
+
+Fundamentals of Physics, Ch 1. Follow for the next one.
+#physics #learnphysics #SIunits #FundamentalsOfPhysics #BeyondTheObviousPhysics
+```
+
+**Instagram (very short)**
+```
+Physics has hundreds of quantities, but only SEVEN are base quantities. Which one is NOT: length, speed, time or mass? 👇
+#physics #learnphysics #FundamentalsOfPhysics
+```
+
+**YouTube title (short, 29 characters):** Why Only Seven Base Units?
+
+**YouTube description (short)**
+```
+Speed, force, energy, pressure... do we need a standard for each? No. Only seven base quantities; every other unit is built from them.
+Challenge: which is NOT a base quantity: length, speed, time or mass? Answer below; we reveal it in the next video.
+Fundamentals of Physics, Chapter 1. Based on Halliday & Resnick; not affiliated with the publisher.
+#physics #Shorts
+```
+
+**Pinned comment (short):** Challenge: which is NOT a base quantity: length, speed, time or mass? 👇
+
+## Thumbnails
+- YouTube: `thumbnails/ch01_02_youtube_1280x720.png`
+- Instagram cover: `thumbnails/ch01_02_instagram_cover_1080x1920.png`

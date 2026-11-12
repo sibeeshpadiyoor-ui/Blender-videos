@@ -125,6 +125,34 @@ const tall3 = base(1080, 1920, `
 ${bar(140, 1290, 800, 26)}
 <div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
 
+// ---- Video 2: "Why only seven?" -- a gold 7 and the seven colors ----
+const SEVEN = ["#4CC9F0", "#FF6B9D", "#FFB703", "#5EE6A8", "#A78BFA", "#F4E2B0", "#4A5BA8"];
+const dots = (x, y, d, gap) => SEVEN.map((c, i) =>
+  `<div style="position:absolute;left:${x + i * (d + gap)}px;top:${y}px;width:${d}px;height:${d}px;border-radius:50%;background:${c}"></div>`).join("");
+
+const wide2 = base(1280, 720, `
+<div class="pill" style="left:70px;top:56px">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:44px;top:34px;width:92px">
+<div style="position:absolute;left:70px;top:170px;line-height:1">
+  <div style="font-size:150px;letter-spacing:-3px">WHY ONLY</div>
+  <div class="gold" style="font-size:190px;margin-top:6px">seven?</div>
+</div>
+<div class="gold" style="position:absolute;left:900px;top:100px;font-size:520px;line-height:1">7</div>
+${dots(80, 560, 56, 26)}
+<div class="foot" style="bottom:34px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
+const tall2 = base(1080, 1920, `
+<style>.glow{--gx:50%}</style>
+<div class="pill" style="left:50%;transform:translateX(-50%);top:330px;white-space:nowrap">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:60px;top:60px;width:130px">
+<div style="position:absolute;left:0;right:0;top:440px;text-align:center;line-height:1">
+  <div style="font-size:170px;letter-spacing:-3px">WHY ONLY</div>
+  <div class="gold" style="font-size:230px;margin-top:4px">seven?</div>
+</div>
+<div class="gold" style="position:absolute;left:0;right:0;top:860px;text-align:center;font-size:480px;line-height:1">7</div>
+${dots(95, 1400, 90, 40)}
+<div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
 (async () => {
   const out = path.join(ROOT, "thumbnails");
   fs.mkdirSync(out, { recursive: true });
@@ -134,6 +162,8 @@ ${bar(140, 1290, 800, 26)}
     ["trailer_instagram_cover_1080x1920", tall, 1080, 1920],
     ["ch01_01_youtube_1280x720", wide1, 1280, 720],
     ["ch01_01_instagram_cover_1080x1920", tall1, 1080, 1920],
+    ["ch01_02_youtube_1280x720", wide2, 1280, 720],
+    ["ch01_02_instagram_cover_1080x1920", tall2, 1080, 1920],
     ["ch01_03_youtube_1280x720", wide3, 1280, 720],
     ["ch01_03_instagram_cover_1080x1920", tall3, 1080, 1920]]) {
     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
