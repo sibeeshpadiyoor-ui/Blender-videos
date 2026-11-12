@@ -190,8 +190,9 @@ class Stage:
             self.show(obj, start, end)
         return obj
 
-    def box(self, width, height, x, z, color, start=None, end=None):
-        obj = S.add_box(width, height, (x, 0, z), self.mat(color))
+    def box(self, width, height, x, z, color, start=None, end=None,
+            front=0.0):
+        obj = S.add_box(width, height, (x, -front, z), self.mat(color))
         if start is not None:
             self.show(obj, start, end)
         return obj
@@ -213,6 +214,10 @@ class Stage:
         tan_h, tan_v = S.view_tangents(self.cam, self.fmt)
         for i, sentence in enumerate(timeline.sentences):
             lines = textwrap.wrap(sentence, width)
+            wider = width
+            while len(lines) > 4 and wider < 52:      # keep clear of the footer
+                wider += 4
+                lines = textwrap.wrap(sentence, wider)
             start = timeline.start(i) - 0.05
             end = timeline.end(i) + 0.3
             if i + 1 < len(timeline.sentences):
