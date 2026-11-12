@@ -197,15 +197,21 @@ class Stage:
             self.show(obj, start, end)
         return obj
 
-    def headline(self, white, gold, tag=None):
-        """Bold white line(s) with one gold italic serif line under them."""
+    def headline(self, white, gold, tag=None, start=0.0, tag_start=None):
+        """Bold white line(s) with one gold italic serif line under them.
+
+        `start` delays the title (e.g. after an answer to the last video);
+        the small series tag can appear earlier with `tag_start`.
+        """
         y = 0.80
         for line in white:
-            self.text(line.upper(), y, 0.095, "fg", 0.1)
+            self.text(line.upper(), y, 0.095, "fg", start + 0.1)
             y -= 0.075
-        self.text(gold, y - 0.01, 0.125, "gold", 0.4, font="serif")
+        self.text(gold, y - 0.01, 0.125, "gold", start + 0.4, font="serif")
         if tag:
-            tag_obj = self.text(tag.upper(), 0.905, 0.024, "muted", 0.1,
+            if tag_start is None:
+                tag_start = start + 0.1
+            tag_obj = self.text(tag.upper(), 0.905, 0.024, "muted", tag_start,
                                 font="body", align="LEFT", x=-0.88)
             tag_obj.data.space_character = 1.3
 
