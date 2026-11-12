@@ -92,6 +92,8 @@ def main():
 
     video = encode(frames / "f_%04d.png", out / f"{stem}.mp4", fmt.fps,
                    crf=quality.crf, loops=args.loops, audio=audio)
+    if "timeline" in kwargs:        # captions file to upload with the video
+        kwargs["timeline"].write_srt(out / f"{stem}.srt")
     print(f"\nSaved {video}")
 
 

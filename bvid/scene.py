@@ -189,7 +189,18 @@ def add_arrow(start, end, mat, radius=0.04, parent=None):
     return shaft, tip
 
 
-def add_screen_text(scene, fmt, text, x, y, size, mat, align="CENTER"):
+def view_tangents(cam, fmt):
+    """Half-width and half-height of the view at distance 1 from the camera."""
+    half_sensor = cam.data.sensor_width / 2
+    if fmt.aspect >= 1:
+        tan_h = half_sensor / cam.data.lens
+        return tan_h, tan_h / fmt.aspect
+    tan_v = half_sensor / cam.data.lens
+    return tan_v * fmt.aspect, tan_v
+
+
+def add_screen_text(scene, fmt, text, x, y, size, mat, align="CENTER",
+                    font="maths", depth=2.0):
     """Text fixed to the screen, like a caption.
 
     `x`, `y` run from -1 to 1 across the frame (0, 0 is the centre) and
@@ -197,19 +208,12 @@ def add_screen_text(scene, fmt, text, x, y, size, mat, align="CENTER"):
     same layout works for every format.
     """
     cam = scene.camera
-    depth = 2.0
-    half_sensor = cam.data.sensor_width / 2
-    if fmt.aspect >= 1:
-        tan_h = half_sensor / cam.data.lens
-        tan_v = tan_h / fmt.aspect
-    else:
-        tan_v = half_sensor / cam.data.lens
-        tan_h = tan_v * fmt.aspect
+    tan_h, tan_v = view_tangents(cam, fmt)
 
     bpy.ops.object.text_add()
     obj = bpy.context.object
     obj.data.body = text
-    obj.data.font = maths_font() or obj.data.font
+    obj.data.font = load_font(font) or obj.data.font
     obj.data.align_x = align
     obj.data.align_y = "CENTER"
     obj.data.size = size * 2 * tan_h * depth
@@ -229,31 +233,51 @@ def pop_in(obj, frame, fps, duration=0.4):
         key(obj, frame + f, scale=(s, s, s))
 
 
-# Fonts that include Greek letters and maths symbols (the font built into
-# Blender does not). The first one found is used.
-FONT_CANDIDATES = [
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-    "/usr/share/fonts/dejavu/DejaVuSans.ttf",
-    "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
-    "/Library/Fonts/Arial Unicode.ttf",
-    "C:/Windows/Fonts/seguisym.ttf",
-    "C:/Windows/Fonts/arial.ttf",
-]
+# Fonts by role; the first file found is used. "maths" must include Greek
+# letters and maths symbols (the font built into Blender does not).
+FONTS = {
+    "body": [
+        "/usr/share/fonts/opentype/inter/Inter-Medium.otf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "C:/Windows/Fonts/arial.ttf",
+    ],
+    "bold": [
+        "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "C:/Windows/Fonts/arialbd.ttf",
+    ],
+    "serif": [
+        "/usr/share/fonts/truetype/liberation/LiberationSerif-Italic.ttf",
+        "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "C:/Windows/Fonts/timesi.ttf",
+    ],
+    "maths": [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/dejavu/DejaVuSans.ttf",
+        "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
+        "/Library/Fonts/Arial Unicode.ttf",
+        "C:/Windows/Fonts/seguisym.ttf",
+        "C:/Windows/Fonts/arial.ttf",
+    ],
+}
 
 
-def maths_font():
-    for path in FONT_CANDIDATES:
+def load_font(kind="maths"):
+    for path in FONTS[kind]:
         if Path(path).exists():
             return bpy.data.fonts.load(path, check_existing=True)
     return None
 
 
-def add_world_text(text, location, size, mat, parent=None, align="CENTER"):
+def add_world_text(text, location, size, mat, parent=None, align="CENTER",
+                   font="maths"):
     """Text standing in the XZ plane, readable from a camera on the -Y side."""
     bpy.ops.object.text_add()
     obj = bpy.context.object
     obj.data.body = text
-    obj.data.font = maths_font() or obj.data.font
+    obj.data.font = load_font(font) or obj.data.font
     obj.data.align_x = align
     obj.data.align_y = "CENTER"
     obj.data.size = size
@@ -272,12 +296,12 @@ def pop_out(obj, frame, fps, duration=0.25):
         key(obj, frame - steps + f, scale=(s, s, s))
 
 
-def show(obj, start, end, fps):
+def show(obj, start, end, fps, duration=0.4):
     """Make `obj` visible only between `start` and `end` (in seconds).
     `end=None` keeps it until the video finishes."""
-    pop_in(obj, 1 + round(start * fps), fps)
+    pop_in(obj, 1 + round(start * fps), fps, duration)
     if end is not None:
-        pop_out(obj, 1 + round(end * fps), fps)
+        pop_out(obj, 1 + round(end * fps), fps, min(duration, 0.25))
 
 
 def flat_style(scene):
