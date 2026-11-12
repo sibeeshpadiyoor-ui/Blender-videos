@@ -96,6 +96,35 @@ const tall1 = base(1080, 1920, `
 ${table(170, 940, 740, 250)}
 <div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
 
+// ---- Video 3: "What is one meter?" -- a green bar and a gold ? ----
+const GREEN = "#5EE6A8";
+const bar = (x, y, w, h) => `
+<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;background:${GREEN};border-radius:6px"></div>
+${[0, 0.25, 0.5, 0.75, 1].map(f => `<div style="position:absolute;left:${x + f * w - 3}px;top:${y - h * (f % 0.5 ? 0.7 : 1.2)}px;width:6px;height:${h * (f % 0.5 ? 0.7 : 1.2)}px;background:${GREEN}"></div>`).join("")}`;
+
+const wide3 = base(1280, 720, `
+<div class="pill" style="left:70px;top:56px">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:44px;top:34px;width:92px">
+<div style="position:absolute;left:70px;top:170px;line-height:1">
+  <div style="font-size:150px;letter-spacing:-3px">WHAT IS</div>
+  <div class="gold" style="font-size:190px;margin-top:6px">1 meter?</div>
+</div>
+${bar(80, 560, 700, 22)}
+<div style="position:absolute;left:830px;top:140px;font-weight:900;font-size:430px;color:#FFB703;line-height:1">?</div>
+<div class="foot" style="bottom:34px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
+const tall3 = base(1080, 1920, `
+<style>.glow{--gx:50%}</style>
+<div class="pill" style="left:50%;transform:translateX(-50%);top:330px;white-space:nowrap">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:60px;top:60px;width:130px">
+<div style="position:absolute;left:0;right:0;top:440px;text-align:center;line-height:1">
+  <div style="font-size:170px;letter-spacing:-3px">WHAT IS</div>
+  <div class="gold" style="font-size:230px;margin-top:4px">1 meter?</div>
+</div>
+<div style="position:absolute;left:0;right:0;top:880px;text-align:center;font-weight:900;font-size:330px;color:#FFB703;line-height:1">?</div>
+${bar(140, 1290, 800, 26)}
+<div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
 (async () => {
   const out = path.join(ROOT, "thumbnails");
   fs.mkdirSync(out, { recursive: true });
@@ -104,7 +133,9 @@ ${table(170, 940, 740, 250)}
     ["trailer_youtube_1280x720", wide, 1280, 720],
     ["trailer_instagram_cover_1080x1920", tall, 1080, 1920],
     ["ch01_01_youtube_1280x720", wide1, 1280, 720],
-    ["ch01_01_instagram_cover_1080x1920", tall1, 1080, 1920]]) {
+    ["ch01_01_instagram_cover_1080x1920", tall1, 1080, 1920],
+    ["ch01_03_youtube_1280x720", wide3, 1280, 720],
+    ["ch01_03_instagram_cover_1080x1920", tall3, 1080, 1920]]) {
     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
     // Load from a real file: a page made with setContent() cannot read the
     // local fonts and logo.
