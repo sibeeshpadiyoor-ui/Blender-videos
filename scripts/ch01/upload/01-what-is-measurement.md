@@ -26,7 +26,7 @@ CHALLENGE: your friend says the road is "five long". What would you ask? Answer 
 
 NEXT: why does physics need only seven base units?
 
-Reference: Halliday & Resnick, Fundamentals of Physics, Chapter 1 (Measurement). Explanations and examples are our own.
+Reference: Halliday & Resnick, Fundamentals of Physics, Chapter 1 (Measurement). Explanations and examples are our own. Not affiliated with or endorsed by the book's publisher.
 
 #physics #measurement #Shorts
 
@@ -46,7 +46,7 @@ A number alone tells us nothing. Measuring means comparing with an agreed unit, 
 CHALLENGE: your friend says the road is "5 long". What would you ask? 👇
 Next: why physics needs only 7 base units.
 
-Part of Fundamentals of Physics, from Beyond the Obvious Physics. Follow for the next idea.
+Part of Fundamentals of Physics, from Beyond the Obvious Physics. Based on Halliday & Resnick, Chapter 1; not affiliated with the publisher. Follow for the next idea.
 
 #physics #physicsexplained #learnphysics #measurement #units #science #education #FundamentalsOfPhysics #BeyondTheObviousPhysics
 
