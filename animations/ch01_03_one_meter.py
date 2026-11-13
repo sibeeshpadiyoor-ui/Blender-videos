@@ -138,8 +138,10 @@ def build(scene, fmt, timeline):
     st.label("equator", 2.25, c[1] - 0.1, 0.3, "fg", t2 + d * 0.8, gone,
              font="body")
     st.label("1792", 0, -1.4, 0.7, "gold", t2 + d * 0.1, gone, font="serif")
-    st.label("1 meter = 1 / 10 000 000", 0, -2.2, 0.3, "amber", t2 + d * 0.45,
+    st.label("1 meter = 1 / 10 000 000", 0, -2.1, 0.3, "amber", t2 + d * 0.45,
              gone, font="maths")
+    st.label("of the pole-to-equator distance", 0, -2.55, 0.24, "muted",
+             t2 + d * 0.5, gone, font="body")
 
     # 5: the metal bar near Paris
     t3, d = span(5)
