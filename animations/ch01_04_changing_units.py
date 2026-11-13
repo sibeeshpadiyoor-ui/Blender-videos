@@ -18,7 +18,7 @@ NARRATION = [
     "Now, today's topic: changing units.",                              # 2
     "The metric system was proposed in 1792. It even tried a ten-hour "
     "day! That part did not catch on.",                                 # 3
-    "Today, science uses one system, S I. But other units are still "
+    "Today, science uses one system, S.I. But other units are still "
     "around, so we need to change units without mistakes.",             # 4
     "Here is the trick. How many seconds are in two minutes? "
     "We know one minute is sixty seconds.",                             # 5
@@ -64,10 +64,10 @@ def build(scene, fmt, timeline):
     st.text("LAST VIDEO'S", 0.80, 0.05, "muted", t0, tl.start(1))
     st.text("CHALLENGE", 0.73, 0.075, "amber", t0, tl.start(1))
     st.label("How far does light travel", 0, 1.4, 0.34, "fg", t0 + d * 0.3,
-             tl.start(2), font="body")
+             tl.start(1), font="body")
     st.label("in one billionth of a second?", 0, 0.85, 0.34, "fg",
-             t0 + d * 0.45, tl.start(2), font="body")
-    st.label("1 ns", 0, -0.9, 1.7, "gold", t0 + d * 0.65, tl.start(2),
+             t0 + d * 0.45, tl.start(1), font="body")
+    st.label("1 ns", 0, -0.9, 1.7, "gold", t0 + d * 0.65, tl.start(1),
              font="serif")
 
     # 1: the answer, 0.3 m = 30 cm
@@ -154,9 +154,9 @@ def build(scene, fmt, timeline):
     st.label("min", 1.05, row - 0.55, 0.55, "fg", t7 + d * 0.2, tl.start(8),
              font="maths")
     cancel = t7 + d * 0.5
-    st.box(0.95, 0.07, -1.25, row + 0.06, "pink", cancel, tl.start(8),
+    st.box(0.95, 0.07, -1.25, row - 0.04, "pink", cancel, tl.start(8),
            front=0.1)
-    st.box(0.95, 0.07, 1.05, row - 0.5, "pink", cancel, tl.start(8),
+    st.box(0.95, 0.07, 1.05, row - 0.6, "pink", cancel, tl.start(8),
            front=0.1)
     st.label("= 120 s", 0, -0.5, 1.0, "green", t7 + d * 0.72, tl.start(8),
              font="maths")
