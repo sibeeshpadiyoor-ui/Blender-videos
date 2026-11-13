@@ -15,20 +15,26 @@ NARRATION = [
     "Speed. It is length divided by time, so it is built from base "
     "quantities.",                                                      # 1
     "Now, today's topic: length. What is one meter, exactly?",          # 2
+    ("Today, the meter is defined using light and time. "
+     "Strange, for a length! How did we get there? Let's follow its "
+     "story.", 0.4),                                                    # 3
     "In 1792, France defined it from the Earth: one ten-millionth of "
-    "the distance from the North Pole to the equator.",                 # 3
+    "the distance from the North Pole to the equator.",                 # 4
     "But nobody can carry the Earth around. So the meter became the "
-    "distance between two scratches on a metal bar, kept near Paris.",  # 4
+    "distance between two scratches on a metal bar, kept near Paris.",  # 5
     "In 1960, it was tied to light: about 1.65 million wavelengths of "
-    "orange-red light from krypton atoms.",                             # 5
+    "orange-red light from krypton atoms.",                             # 6
     "Since 1983, one meter is the distance light travels in a vacuum "
     "in one two hundred ninety-nine million, seven hundred ninety-two "
-    "thousand, four hundred fifty-eighth of a second.",                 # 6
+    "thousand, four hundred fifty-eighth of a second.",                 # 7
+    ("Each new definition was chosen to match the old one. "
+     "The meter never changed its length. "
+     "Only the way we reproduce it got better.", 0.6),                  # 8
     "That fixes the speed of light, exactly. "
-    "Light never changes, and anyone can use it.",                      # 7
+    "Light never changes, and anyone can use it.",                      # 9
     ("Challenge. How far does light travel in one billionth of a second?",
-     1.5),                                                              # 8
-    "Next time: how do we change units without mistakes?",              # 9
+     1.5),                                                              # 10
+    "Next time: how do we change units without mistakes?",              # 11
 ]
 
 ORANGE = "#FF6A2B"
@@ -94,10 +100,22 @@ def build(scene, fmt, timeline):
              font="serif")
     st.label("1 m", 0, -1.2, 0.5, "amber", t1 + d * 0.45, tl.start(3))
 
-    # 3: 1792, a ten-millionth of the pole-to-equator distance
-    t2, d = span(3)
+    # 3: hook, today's meter is defined by light and time
+    t3h, d = span(3)
+    st.label("TODAY'S METER", 0, 2.2, 0.38, "muted", t3h + 0.2, tl.start(4),
+             font="body")
+    st.label("defined with", 0, 1.2, 0.42, "fg", t3h + d * 0.2, tl.start(4),
+             font="body")
+    st.label("light", -1.0, 0.1, 0.8, "yellow", t3h + d * 0.3, tl.start(4))
+    st.label("+", 0.0, 0.1, 0.8, "fg", t3h + d * 0.4, tl.start(4))
+    st.label("time", 1.0, 0.1, 0.8, "cyan", t3h + d * 0.45, tl.start(4))
+    st.label("?", 0, -1.4, 1.7, "gold", t3h + d * 0.65, tl.start(4),
+             font="serif")
+
+    # 4: 1792, a ten-millionth of the pole-to-equator distance
+    t2, d = span(4)
     c = (0.0, 0.7)
-    gone = tl.start(4)
+    gone = tl.start(5)
     disk_mat = st.mat("#13265F")
     bpy.ops.mesh.primitive_circle_add(vertices=96, radius=1.45,
                                       fill_type="NGON",
@@ -123,71 +141,86 @@ def build(scene, fmt, timeline):
     st.label("1 meter = 1 / 10 000 000", 0, -2.2, 0.3, "amber", t2 + d * 0.45,
              gone, font="maths")
 
-    # 4: the metal bar near Paris
-    t3, d = span(4)
+    # 5: the metal bar near Paris
+    t3, d = span(5)
     bar_z = 0.8
-    st.box(4.4, 0.5, 0, bar_z, METAL, t3 + d * 0.3, tl.start(5))
+    st.box(4.4, 0.5, 0, bar_z, METAL, t3 + d * 0.3, tl.start(6))
     for x in (-1.8, 1.8):
-        st.box(0.05, 0.62, x, bar_z, "bg", t3 + d * 0.4, tl.start(5),
+        st.box(0.05, 0.62, x, bar_z, "bg", t3 + d * 0.4, tl.start(6),
                front=0.08)
-    st.box(3.6, 0.05, 0, bar_z - 0.6, "amber", t3 + d * 0.5, tl.start(5))
-    st.label("1 m", 0, bar_z - 1.15, 0.45, "amber", t3 + d * 0.5, tl.start(5))
+    st.box(3.6, 0.05, 0, bar_z - 0.6, "amber", t3 + d * 0.5, tl.start(6))
+    st.label("1 m", 0, bar_z - 1.15, 0.45, "amber", t3 + d * 0.5, tl.start(6))
     st.label("metal bar, near Paris", 0, bar_z + 0.8, 0.32, "soft",
-             t3 + d * 0.65, tl.start(5), font="body")
+             t3 + d * 0.65, tl.start(6), font="body")
 
-    # 5: 1960, wavelengths of orange-red light
-    t4, d = span(5)
+    # 6: 1960, wavelengths of orange-red light
+    t4, d = span(6)
     wave, wave_data = curve(
         [(-2.0 + 4.0 * i / 240, 0, 1.0 + 0.32 * math.sin(S.TAU * 7 * i / 240))
          for i in range(241)], ORANGE, 0.045, "Wave")
-    st.show(wave, 0.0, tl.start(6))
+    st.show(wave, 0.0, tl.start(7))
     draw_on(wave, wave_data, t4 + d * 0.3, t4 + d * 0.6)
-    st.box(4.0, 0.05, 0, 0.35, "amber", t4 + d * 0.3, tl.start(6))
-    st.label("1960", 0, 2.3, 0.7, "gold", t4 + 0.2, tl.start(6), font="serif")
-    st.label("1 650 763.73", 0, -0.6, 0.7, "fg", t4 + d * 0.55, tl.start(6),
+    st.box(4.0, 0.05, 0, 0.35, "amber", t4 + d * 0.3, tl.start(7))
+    st.label("1960", 0, 2.3, 0.7, "gold", t4 + 0.2, tl.start(7), font="serif")
+    st.label("1 650 763.73", 0, -0.6, 0.7, "fg", t4 + d * 0.55, tl.start(7),
              font="maths")
     st.label("wavelengths of krypton light", 0, -1.3, 0.3, ORANGE,
-             t4 + d * 0.65, tl.start(6), font="body")
+             t4 + d * 0.65, tl.start(7), font="body")
 
-    # 6: 1983, how far light goes in a tiny slice of a second
-    t5, d = span(6)
-    st.label("1983", 0, 2.3, 0.7, "gold", t5 + 0.2, tl.start(7), font="serif")
-    st.box(4.0, 0.2, 0, 0.9, "green", t5 + 0.5, tl.start(7))
+    # 7: 1983, how far light goes in a tiny slice of a second
+    t5, d = span(7)
+    st.label("1983", 0, 2.3, 0.7, "gold", t5 + 0.2, tl.start(8), font="serif")
+    st.box(4.0, 0.2, 0, 0.9, "green", t5 + 0.5, tl.start(8))
     for x in (-2.0, 2.0):
-        st.box(0.07, 0.6, x, 0.9, "green", t5 + 0.5, tl.start(7))
-    st.label("1 meter", 0, 1.65, 0.4, "green", t5 + d * 0.2, tl.start(7))
+        st.box(0.07, 0.6, x, 0.9, "green", t5 + 0.5, tl.start(8))
+    st.label("1 meter", 0, 1.65, 0.4, "green", t5 + d * 0.2, tl.start(8))
     for n in range(3):
         a = t5 + d * (0.25 + 0.22 * n)
         dot = S.add_box(0.3, 0.3, (-2.0, -0.1, 0.9), st.mat("yellow"))
         st.show(dot, a, a + 1.4)
         S.move(dot, a + 0.15, a + 1.2, (2.0, -0.1, 0.9), st.fps)
     st.label("in this time:", 0, -0.2, 0.3, "muted", t5 + d * 0.5,
-             tl.start(7), font="body")
+             tl.start(8), font="body")
     st.label("1 / 299 792 458 s", 0, -1.0, 0.55, "yellow", t5 + d * 0.55,
-             tl.start(7), font="maths")
-
-    # 7: the speed of light is now fixed
-    t6, d = span(7)
-    st.label("c = 299 792 458 m/s", 0, 1.4, 0.5, "gold", t6 + 0.2,
              tl.start(8), font="maths")
-    st.label("EXACTLY", 0, 0.5, 0.7, "amber", t6 + d * 0.2, tl.start(8))
+
+    # 8: same length every time, only a better way to reproduce it
+    t8s, d = span(8)
+    st.box(4.0, 0.22, 0, 1.1, "green", t8s + 0.2, tl.start(9))
+    st.label("1 m", 0, 1.75, 0.5, "green", t8s + 0.3, tl.start(9))
+    st.label("SAME LENGTH", 0, 2.45, 0.5, "amber", t8s + d * 0.1,
+             tl.start(9))
+    for n, (text, color) in enumerate((("1792  Earth", "cyan"),
+                                        ("Metal bar", "fg"),
+                                        ("1960  Krypton light", ORANGE),
+                                        ("1983  Speed of light", "yellow"))):
+        st.label(text, 0, (0.3, -0.5, -1.3, -2.1)[n], 0.42, color,
+                 t8s + d * (0.3 + 0.17 * n), tl.start(9), font="body")
+    st.label("only the way we reproduce it improved", 0, -2.9, 0.26, "muted",
+             t8s + d * 0.85, tl.start(9), font="body")
+
+    # 9: the speed of light is now fixed
+    t6, d = span(9)
+    st.label("c = 299 792 458 m/s", 0, 1.4, 0.5, "gold", t6 + 0.2,
+             tl.start(10), font="maths")
+    st.label("EXACTLY", 0, 0.5, 0.7, "amber", t6 + d * 0.2, tl.start(10))
     for text, z, delay in (("✓  never changes", -0.8, 0.5),
                            ("✓  anyone can use it", -1.6, 0.75)):
-        st.label(text, 0, z, 0.4, "green", t6 + d * delay, tl.start(8),
+        st.label(text, 0, z, 0.4, "green", t6 + d * delay, tl.start(10),
                  font="maths")
 
-    # 8: challenge
-    t7, d = span(8)
-    st.label("CHALLENGE", 0, 2.4, 0.38, "amber", t7, tl.start(9))
+    # 10: challenge
+    t7, d = span(10)
+    st.label("CHALLENGE", 0, 2.4, 0.38, "amber", t7, tl.start(11))
     st.label("How far does light travel", 0, 1.5, 0.3, "fg", t7 + d * 0.3,
-             tl.start(9), font="body")
+             tl.start(11), font="body")
     st.label("in one billionth of a second?", 0, 0.95, 0.3, "fg",
-             t7 + d * 0.45, tl.start(9), font="body")
-    st.label("1 ns", 0, -0.7, 1.6, "gold", t7 + d * 0.65, tl.start(9),
+             t7 + d * 0.45, tl.start(11), font="body")
+    st.label("1 ns", 0, -0.7, 1.6, "gold", t7 + d * 0.65, tl.start(11),
              font="serif")
 
-    # 9: next
-    t8 = tl.start(9)
+    # 11: next
+    t8 = tl.start(11)
     st.label("NEXT", 0, 0.8, 0.28, "muted", t8 + 0.3, font="body")
     st.label("Change units", 0, 0.0, 0.6, "fg", t8 + 0.6)
     st.label("without mistakes", 0, -1.0, 0.7, "gold", t8 + 1.0, font="serif")
