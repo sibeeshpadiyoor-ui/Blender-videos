@@ -205,11 +205,29 @@ def build_kit(m):
         cyl("Terminal", x, 0, 0.10, 0.11, 0.006, mat, g)
     parts["Galvanometer"] = (0.33, 0.05 - 0.03, 0.09)
 
-    cell = rod("Cell", (0.295, -0.09, 0.0165), (0.353, -0.09, 0.0165), 0.0165,
-               m["cell"], segments=SEG)
-    rod("CellCap", (0.353, -0.09, 0.0165), (0.357, -0.09, 0.0165), 0.005,
-        m["brass"], segments=24)
-    cell.name = "Cell_1V5"
+    # D cell on its side: dark body, copper band and raised cap at the + end.
+    cy_, cz, cr = -0.09, 0.0165, 0.0165
+    cell = rod("Cell_1V5", (0.295, cy_, cz), (0.341, cy_, cz), cr, m["black"],
+               segments=SEG)
+    rod("CellBand", (0.341, cy_, cz), (0.353, cy_, cz), cr, m["cu"], segments=SEG)
+    rod("CellCap", (0.353, cy_, cz), (0.358, cy_, cz), 0.0055, m["alu"],
+        segments=24)
+    rod("CellBase", (0.2935, cy_, cz), (0.295, cy_, cz), cr * 0.8, m["alu"],
+        segments=24)
+    tilt = math.radians(50)            # labels face the viewer, up the curve
+    for text, x, size in (("\u2212", 0.301, 0.014), ("1.5 V", 0.320, 0.011),
+                          ("+", 0.347, 0.014)):
+        bpy.ops.object.text_add()
+        label = bpy.context.object
+        label.name = "CellLabel"
+        label.data.body = text
+        label.data.align_x = label.data.align_y = "CENTER"
+        label.data.size = size
+        label.data.extrude = 0.0003
+        label.data.materials.append(m["black"] if text == "+" else m["dial"])
+        r = cr + 0.0004
+        label.location = (x, cy_ - r * math.sin(tilt), cz + r * math.cos(tilt))
+        label.rotation_euler = (tilt, 0, 0)
     k = empty("TapKey", location=(0.325, -0.19, 0))
     box("Plate", (0.035, 0.08, 0.008), (0, 0, 0.004), m["black"], k)
     arm = empty("KeyArm", k, (0, 0.036, 0.012))      # turn about X to press
