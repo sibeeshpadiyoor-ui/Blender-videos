@@ -121,7 +121,7 @@ def build_kit(m):
     z2 = TOP + L1["height"] + 0.001
     l2 = coil("L2_BulbCoil", L2, (cx, cy, z2), m)
     arm = L2["flange"] + 0.010
-    box("BulbTab", (0.034, 0.018, 0.003), (arm - 0.008, 0, L2["height"] - 0.0015),
+    box("BulbTab", (0.020, 0.018, 0.003), (arm - 0.001, 0, L2["height"] - 0.0015),
         m["bobbin"], l2)
     cyl("BulbHolder", arm, 0, L2["height"], L2["height"] + 0.014, 0.0075,
         m["brass"], l2)
