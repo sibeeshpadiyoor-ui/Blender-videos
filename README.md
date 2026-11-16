@@ -59,6 +59,10 @@ Other options:
 - `simple_pendulum` - a one-minute physics tutorial: parts, forces, the period
   formula `T = 2π√(L/g)`, and how mass and length affect the period. Uses the
   fast flat style, about half a second per frame at `preview`.
+- `moto_getaway` - a 12 s motorcycle getaway previs for 16:9 (`--format youtube`):
+  one camera move from a rear-wheel close-up, through a chase past two cars,
+  to a low frontal shot out of a corner. Meant as a layout, timing and camera
+  reference for a video model; retune it with the tables at the top of the file.
 - `lorentz_circle` - a charged particle circling in a magnetic field,
   `r = mv / qB`.
 
