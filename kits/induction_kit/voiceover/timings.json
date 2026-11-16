@@ -1,0 +1,138 @@
+{
+  "voice": "en-US-AndrewNeural",
+  "total": 75.56,
+  "sentences": [
+    {
+      "index": 0,
+      "start": 0.61,
+      "end": 2.47,
+      "text": "This bulb has no battery."
+    },
+    {
+      "index": 1,
+      "start": 2.47,
+      "end": 4.68,
+      "text": "No wire joins it to the supply."
+    },
+    {
+      "index": 2,
+      "start": 4.68,
+      "end": 6.15,
+      "text": "So why is it glowing?"
+    },
+    {
+      "index": 3,
+      "start": 6.15,
+      "end": 12.25,
+      "text": "The lower coil carries alternating current, which goes back and forth fifty times a second."
+    },
+    {
+      "index": 4,
+      "start": 12.25,
+      "end": 16.78,
+      "text": "So its magnetic field keeps growing, shrinking and reversing."
+    },
+    {
+      "index": 5,
+      "start": 16.78,
+      "end": 19.85,
+      "text": "The iron core carries that changing field upward."
+    },
+    {
+      "index": 6,
+      "start": 19.85,
+      "end": 24.09,
+      "text": "A changing magnetic field through a coil pushes a current around it."
+    },
+    {
+      "index": 7,
+      "start": 24.09,
+      "end": 26.41,
+      "text": "That is electromagnetic induction."
+    },
+    {
+      "index": 8,
+      "start": 26.41,
+      "end": 30.81,
+      "text": "One coil drives the other without touching it: mutual induction."
+    },
+    {
+      "index": 9,
+      "start": 30.81,
+      "end": 34.09,
+      "text": "With a steady current from a cell, nothing happens."
+    },
+    {
+      "index": 10,
+      "start": 34.09,
+      "end": 39.02,
+      "text": "The needle kicks only at the moment we switch on, and again when we switch off."
+    },
+    {
+      "index": 11,
+      "start": 39.02,
+      "end": 41.11,
+      "text": "No change, no current."
+    },
+    {
+      "index": 12,
+      "start": 41.11,
+      "end": 45.87,
+      "text": "Lift the coil and the bulb dims, because less of the field reaches it."
+    },
+    {
+      "index": 13,
+      "start": 45.87,
+      "end": 49.21,
+      "text": "Double the turns, and the voltage roughly doubles."
+    },
+    {
+      "index": 14,
+      "start": 49.21,
+      "end": 51.27,
+      "text": "That is how a transformer works."
+    },
+    {
+      "index": 15,
+      "start": 51.27,
+      "end": 53.0,
+      "text": "Now an aluminium ring."
+    },
+    {
+      "index": 16,
+      "start": 53.0,
+      "end": 55.16,
+      "text": "It is a coil with just one turn."
+    },
+    {
+      "index": 17,
+      "start": 55.16,
+      "end": 60.5,
+      "text": "The induced current makes the ring a magnet that opposes the coil, and it jumps."
+    },
+    {
+      "index": 18,
+      "start": 60.5,
+      "end": 63.29,
+      "text": "Cut a slot in the ring and it stays put."
+    },
+    {
+      "index": 19,
+      "start": 63.29,
+      "end": 66.89,
+      "text": "No complete path, no current, no force."
+    },
+    {
+      "index": 20,
+      "start": 66.89,
+      "end": 71.65,
+      "text": "Chargers, transformers and induction cooktops all use this."
+    },
+    {
+      "index": 21,
+      "start": 71.65,
+      "end": 74.06,
+      "text": "Next: why does the ring get hot?"
+    }
+  ]
+}

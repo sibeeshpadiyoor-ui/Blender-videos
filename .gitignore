@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 *.blend1
 .venv/
+kits/induction_kit/voiceover/narration.wav
+kits/induction_kit/voiceover/voice_*
