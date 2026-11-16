@@ -127,8 +127,8 @@ def build_kit(m):
         m["brass"], l2)
     ball("Bulb", (0.011, 0.011, 0.013), (arm, 0, L2["height"] + 0.024),
          m["bulb"], l2)
-    for sx in (-0.009, 0.009):       # sockets for a meter, at the front
-        cyl("Socket", sx, -(L2["flange"] - 0.008), L2["height"],
+    for sx in (-0.017, 0.017):       # sockets for a meter, at the back
+        cyl("Socket", sx, L2["flange"] - 0.008, L2["height"],
             L2["height"] + 0.008, 0.0045, m["yellow"], l2)
     parts["L2 bulb coil, 150 turns, 6 V bulb"] = (cx + arm, cy, z2 + L2["height"] + 0.024)
 
@@ -137,9 +137,9 @@ def build_kit(m):
         cyl("InputCollar", -0.205, y, TOP, TOP + 0.004, 0.009, m["bobbin"])
         cyl("InputSocket", -0.205, y, TOP, TOP + 0.010, 0.006, mat)
     parts["24 V input sockets"] = (-0.205, -0.02, TOP + 0.01)
-    cyl("SwitchBody", -0.17, -0.09, TOP, TOP + 0.014, 0.019, m["black"])
-    cyl("SwitchButton", -0.17, -0.09, TOP + 0.014, TOP + 0.024, 0.013, m["red"])
-    parts["S1 push-to-on switch"] = (-0.17, -0.09, TOP + 0.024)
+    cyl("SwitchBody", -0.10, -0.10, TOP, TOP + 0.014, 0.019, m["black"])
+    cyl("SwitchButton", -0.10, -0.10, TOP + 0.014, TOP + 0.024, 0.013, m["red"])
+    parts["S1 push-to-on switch"] = (-0.10, -0.10, TOP + 0.024)
 
     # Spare coils parked on pegs.
     for name, spec, x in (("L3_300turns", L3, 0.03), ("L4_600turns", L4, 0.115),
@@ -186,14 +186,13 @@ def build_kit(m):
     parts["Supply box: isolating transformer, 24 V AC"] = (sx, sy - 0.10, sh * 0.6)
 
     # Multimeter in front of the base.
-    mm = empty("Multimeter", location=(0.11, -0.24, 0))
-    mm.rotation_euler = (0, 0, math.radians(-12))
+    mm = empty("Multimeter", location=(0.02, -0.25, 0))
     box("Body", (0.078, 0.15, 0.034), (0, 0, 0.017), m["yellow"], mm)
     box("Face", (0.064, 0.135, 0.002), (0, 0, 0.035), m["black"], mm)
     box("Display", (0.05, 0.026, 0.002), (0, 0.045, 0.0365), m["lcd"], mm)
     cyl("Dial", 0, -0.012, 0.035, 0.044, 0.02, m["bobbin"], mm)
     box("DialMark", (0.004, 0.03, 0.002), (0, -0.012, 0.045), m["dial"], mm)
-    parts["Multimeter (AC volts)"] = (0.11, -0.24, 0.04)
+    parts["Multimeter (AC volts)"] = (0.02, -0.25, 0.04)
 
     # Galvanometer, cell and tap key for the make-and-break experiment.
     g = empty("Galvanometer", location=(0.33, 0.05, 0))

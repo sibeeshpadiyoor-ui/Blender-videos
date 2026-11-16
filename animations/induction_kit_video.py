@@ -50,7 +50,7 @@ BLUE, GREEN = (0.15, 0.45, 1.0), (0.2, 1.0, 0.35)
 CX, CY = kit.CORE_XY
 ON_CORE = (CX, CY, kit.TOP + kit.L1["height"] + 0.001)    # resting on L1
 CLEAR = kit.TOP + kit.CORE_LEN + 0.02                     # above the core top
-BULB_PARK = (-0.075, -0.085, kit.TOP)                     # bulb coil set aside
+BULB_PARK = (-0.185, -0.085, kit.TOP)                     # bulb coil set aside
 FLICKER = 1.2       # visible field reversals per second (the real 50 is a blur)
 BULB_FULL = 12.0
 BULB_OFF = 0.3      # unlit glass still shows pale, not black
@@ -62,7 +62,7 @@ VIEW = {
     "bulb_b": ((0.14, -0.27, 0.23), (CX + 0.02, CY, 0.125)),
     "coils": ((-0.10, -0.82, 0.37), (CX, CY, 0.15)),
     "dc": ((0.12, -0.84, 0.46), (0.12, -0.04, 0.05)),
-    "measure": ((0.0, -0.74, 0.43), (0.0, 0.03, 0.12)),
+    "measure": ((0.05, -0.74, 0.46), (0.01, -0.09, 0.075)),
     "ring": ((-0.06, -0.80, 0.34), (CX, CY, 0.15)),
     "wide": ((-0.04, -1.20, 0.78), (-0.04, -0.05, 0.11)),
     "wide_b": ((-0.04, -1.10, 0.70), (-0.04, -0.05, 0.11)),
@@ -318,11 +318,18 @@ def build(scene, fmt, timeline):
         kit.cyl(name + "Plug", -0.205, y, plug, plug + 0.03, 0.005, mat)
         cable(name, pts + [(-0.205, y, plug + 0.07), (-0.205, y, plug + 0.03)],
               0.0022, mat)
-    sock_y, sock_z = CY - (kit.L2["flange"] - 0.008), ON_CORE[2] + kit.L2["height"]
-    for name, mat, gx, sx, lift in (("MeterLeadA", m["Red"], 0.30, 0.009, 0.025),
-                                    ("MeterLeadB", m["Black"], 0.36, -0.009, 0.045)):
-        kit.lead(name, (gx, 0.05, 0.108), (CX + sx, sock_y, sock_z + 0.004),
-                 mat, m, lift=lift)
+    sock_y, sock_z = CY + (kit.L2["flange"] - 0.008), ON_CORE[2] + kit.L2["height"]
+    for name, mat, gx, sx, back in (("MeterLeadA", m["Red"], 0.30, 0.017, 0.105),
+                                    ("MeterLeadB", m["Black"], 0.36, -0.017, 0.118)):
+        x, z = CX + sx, sock_z + 0.004
+        kit.cyl(name + "Plug", x, sock_y, z, z + 0.03, 0.005, mat)
+        kit.cyl(name + "Plug", gx, 0.05, 0.108, 0.138, 0.005, mat)
+        # Round the back of the spare coils, so the leads cross nothing.
+        cable(name, [(x, sock_y, z + 0.03), (x, sock_y, z + 0.055),
+                     (x + 0.01, back, z + 0.03), (x + 0.05, back + 0.01, 0.026),
+                     (0.10, back + 0.01, 0.024), (gx - 0.03, back + 0.01, 0.024),
+                     (gx, 0.11, 0.03), (gx, 0.10, 0.13), (gx, 0.05, 0.175),
+                     (gx, 0.05, 0.138)], 0.0022, mat)
     dc_leads = [o for o in bpy.data.objects if o not in before]
     ac_leads = [o for o in bpy.data.objects if o.name.startswith("SupplyLead")]
     dc_on, dc_off = frame(s(9) + 0.1), frame(s(12) - 0.2)
@@ -331,6 +338,50 @@ def build(scene, fmt, timeline):
                       (dc_off, True), (dc_off + 1, False)):
             vis = on if shown else not on
             S.key(part, f, scale=(1, 1, 1) if vis else (0, 0, 0))
+
+    # --- Multimeter: probes on the coil being measured, reading on the display -
+    meter = obj["Multimeter"]
+    ink = S.material("LcdInk", (0.01, 0.015, 0.01), 0.6)
+
+    def switch(parts, t0, t1):
+        """Show `parts` only from t0 to t1."""
+        f0, f1 = frame(t0), frame(t1)
+        for part in parts:
+            for f, on in ((1, 0), (f0 - 1, 0), (f0, 1), (f1, 1), (f1 + 1, 0)):
+                S.key(part, f, scale=(on, on, on))
+
+    def reading(text, t0, t1):
+        bpy.ops.object.text_add()
+        digits = bpy.context.object
+        digits.name = "Reading"
+        digits.data.body = text
+        digits.data.align_x = digits.data.align_y = "CENTER"
+        digits.data.size = 0.017
+        digits.data.materials.append(ink)
+        digits.parent = meter
+        digits.location = (0, 0.045, 0.0378)
+        switch([digits], t0, t1)
+
+    def probes(spec, t0, t1):
+        before = set(bpy.data.objects)
+        z = ON_CORE[2] + spec["height"] + 0.004
+        for mat, lx, sy, lane in ((m["Red"], 0.012, -0.009, 0.0),
+                                  (m["Black"], -0.012, 0.009, 0.008)):
+            x, y = CX + spec["flange"] - 0.008, CY + sy
+            kit.cyl("ProbePlug", x, y, z, z + 0.03, 0.005, mat)
+            cable("Probe", [(0.02 + lx, -0.177, 0.025), (0.02 + lx, -0.15, 0.035),
+                            (0.0, -0.122 - lane, 0.022),
+                            (-0.028 - lane, -0.118, 0.022),
+                            (-0.028 - lane, -0.04, 0.022),
+                            (-0.045, y - 0.02, z + 0.07), (x, y, z + 0.07),
+                            (x, y, z + 0.03)], 0.0022, mat)
+        switch([o for o in bpy.data.objects if o not in before], t0, t1)
+
+    seat1, seat2 = (m1_on[1], m1_off[0]), (m2_on[1], m2_off[0])
+    probes(kit.L3, *seat1), probes(kit.L4, *seat2)
+    reading("10.1 V", seat1[0] + 0.15, seat1[1])
+    reading("20.3 V", seat2[0] + 0.15, seat2[1])
+    reading("0.0 V", seat1[1] + 0.05, seat2[0] + 0.1)
 
     # --- Field lines and induced currents ------------------------------------
     field_mat, field_strength = glow("FieldGlow", BLUE)
@@ -376,8 +427,8 @@ def build(scene, fmt, timeline):
     caption("The needle kicks only at ON and OFF", s(10), s(11), y=0.88)
     caption("No change, no current", s(11), s(12), YELLOW, y=0.88, size=0.058)
     caption("Further from the coil: dimmer", s(12) + 0.5, s(13))
-    caption("300 turns: about 10 V", s(13) + 1.1, s(15), y=-0.62)
-    caption("600 turns: about 20 V", s(13) + 4.1, s(15), YELLOW)
+    caption("300 turns: about 10 V", s(13) + 1.1, s(15), y=0.88, x=0.26)
+    caption("600 turns: about 20 V", s(13) + 4.1, s(15), YELLOW, y=0.74, x=0.26)
     caption("An aluminium ring", s(15) + 1.0, s(16))
     caption("A coil with just one turn", s(16), s(17))
     caption("Its induced current opposes the coil", s(17), jump)
@@ -387,7 +438,8 @@ def build(scene, fmt, timeline):
     for i, text in enumerate(("Phone chargers", "Transformers",
                               "Induction cooktops")):
         caption(text, s(20) + 1.2 + i * 0.7, s(21), y=0.80 - i * 0.16, size=0.046)
-    caption("Next: why does the ring get hot?", s(21), None, YELLOW, size=0.058)
+    caption("Next: why does the ring get hot?", s(21), None, YELLOW, y=0.8,
+            size=0.058)
     for a, b in supply:
         caption("24 V AC: ON", a + 0.01, min(b, tl.total), GREEN, y=0.86,
                 size=0.024, x=0.74)
