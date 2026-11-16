@@ -61,7 +61,7 @@ VIEW = {
     "bulb_a": ((-0.05, -0.34, 0.21), (CX + 0.02, CY, 0.125)),
     "bulb_b": ((0.14, -0.27, 0.23), (CX + 0.02, CY, 0.125)),
     "coils": ((-0.10, -0.82, 0.37), (CX, CY, 0.15)),
-    "dc": ((0.30, -0.66, 0.36), (0.33, -0.09, 0.03)),
+    "dc": ((0.12, -0.84, 0.46), (0.12, -0.04, 0.05)),
     "measure": ((0.0, -0.74, 0.43), (0.0, 0.03, 0.12)),
     "ring": ((-0.06, -0.80, 0.34), (CX, CY, 0.15)),
     "wide": ((-0.04, -1.20, 0.78), (-0.04, -0.05, 0.11)),
@@ -84,12 +84,20 @@ def screen_text(scene, fmt, text, x, y, size, color, backing=True):
     obj.parent = cam
     obj.location = (x * tan_h * depth, y * tan_v * depth, -depth)
     parts = [obj]
-    if backing:     # a dark bar behind the words keeps them readable
+    if backing:     # a dark outline keeps the words readable, hiding nothing
         h = obj.data.size
-        bar = box("CaptionBar", (len(text) * 0.5 * h + 1.4 * h, 1.7 * h, h * 0.02),
-                  (0, 0, -h * 0.05), S.emissive("CaptionBar", (0.012, 0.014, 0.02)),
-                  obj)
-        parts.append(bar)
+        dark = S.emissive("CaptionEdge", (0.005, 0.006, 0.01))
+        data = obj.data.copy()
+        data.materials.clear()
+        data.materials.append(dark)
+        for i in range(8):      # eight shifted dark copies make the outline
+            a = math.tau * i / 8
+            edge = bpy.data.objects.new("CaptionEdge", data)
+            scene.collection.objects.link(edge)
+            edge.parent = obj
+            edge.location = (0.055 * h * math.cos(a), 0.055 * h * math.sin(a),
+                             -h * 0.03)
+            parts.append(edge)
     for part in parts:
         part.visible_shadow = part.visible_diffuse = part.visible_glossy = False
     return obj
@@ -286,6 +294,39 @@ def build(scene, fmt, timeline):
                     * math.cos(dt * 9)
         S.key(needle, f, rotation_euler=(0, kick, 0))
 
+    # --- Leads for the cell experiment ----------------------------------------
+    # Cell and tap key feed the primary through the input sockets (the AC
+    # leads come out); the galvanometer is joined to the coil on top.
+    m = {n: bpy.data.materials[n] for n in ("Red", "Black")}
+    before = set(bpy.data.objects)
+    top, plug = kit.TOP, kit.TOP + 0.006
+    cable("CellToKey", [(0.357, -0.09, 0.0165), (0.385, -0.10, 0.03),
+                        (0.39, -0.20, 0.035), (0.35, -0.235, 0.025),
+                        (0.325, -0.216, 0.011)], 0.0022, m["Red"])
+    for name, mat, y, pts in (
+            ("KeyToCoil", m["Red"], -0.02,
+             [(0.325, -0.154, 0.017), (0.30, -0.135, 0.035), (0.20, -0.14, 0.05),
+              (0.0, -0.145, 0.05), (-0.13, -0.13, 0.06), (-0.205, -0.07, 0.09)]),
+            ("CellToCoil", m["Black"], 0.02,
+             [(0.295, -0.09, 0.0165), (0.275, -0.08, 0.035), (0.25, -0.035, 0.05),
+              (0.0, -0.03, 0.06), (-0.15, -0.04, 0.07), (-0.19, 0.0, 0.10)])):
+        kit.cyl(name + "Plug", -0.205, y, plug, plug + 0.03, 0.005, mat)
+        cable(name, pts + [(-0.205, y, plug + 0.07), (-0.205, y, plug + 0.03)],
+              0.0022, mat)
+    sock_y, sock_z = CY - (kit.L2["flange"] - 0.008), ON_CORE[2] + kit.L2["height"]
+    for name, mat, gx, sx, lift in (("MeterLeadA", m["Red"], 0.30, 0.009, 0.025),
+                                    ("MeterLeadB", m["Black"], 0.36, -0.009, 0.045)):
+        kit.lead(name, (gx, 0.05, 0.108), (CX + sx, sock_y, sock_z + 0.004),
+                 mat, m, lift=lift)
+    dc_leads = [o for o in bpy.data.objects if o not in before]
+    ac_leads = [o for o in bpy.data.objects if o.name.startswith("SupplyLead")]
+    dc_on, dc_off = frame(s(9) + 0.1), frame(s(12) - 0.2)
+    for part, shown in [(o, True) for o in dc_leads] + [(o, False) for o in ac_leads]:
+        for f, on in ((1, False), (dc_on - 1, False), (dc_on, True),
+                      (dc_off, True), (dc_off + 1, False)):
+            vis = on if shown else not on
+            S.key(part, f, scale=(1, 1, 1) if vis else (0, 0, 0))
+
     # --- Field lines and induced currents ------------------------------------
     field_mat, field_strength = glow("FieldGlow", BLUE)
     field, arrows = field_lines(field_mat)
@@ -314,7 +355,7 @@ def build(scene, fmt, timeline):
               rotation_euler=swing)
 
     # --- Captions ------------------------------------------------------------
-    def caption(text, start, end, color=WHITE, y=-0.82, size=0.04, x=0.0,
+    def caption(text, start, end, color=WHITE, y=-0.82, size=0.05, x=0.0,
                 backing=True):
         S.show(screen_text(scene, fmt, text, x, y, size, color, backing),
                start, end, fps)
@@ -325,23 +366,23 @@ def build(scene, fmt, timeline):
     caption("The iron core carries the field upward", s(5), s(6))
     caption("A changing field pushes a current round the coil", s(6), s(7))
     caption("Electromagnetic induction", s(7), s(8))
-    caption("Mutual induction", s(8), s(9), YELLOW, size=0.048)
-    caption("Steady current from a cell: nothing", s(9) + 1.0, s(10), y=0.78)
-    caption("The needle kicks only at ON and OFF", s(10), s(11), y=0.78)
-    caption("No change, no current", s(11), s(12), YELLOW, y=0.78, size=0.048)
+    caption("Mutual induction", s(8), s(9), YELLOW, size=0.058)
+    caption("Steady current from a cell: nothing", s(9) + 1.0, s(10), y=0.88)
+    caption("The needle kicks only at ON and OFF", s(10), s(11), y=0.88)
+    caption("No change, no current", s(11), s(12), YELLOW, y=0.88, size=0.058)
     caption("Further from the coil: dimmer", s(12) + 0.5, s(13))
     caption("300 turns: about 10 V", s(13) + 1.1, s(15), y=-0.62)
     caption("600 turns: about 20 V", s(13) + 4.1, s(15), YELLOW)
     caption("An aluminium ring", s(15) + 1.0, s(16))
     caption("A coil with just one turn", s(16), s(17))
     caption("Its induced current opposes the coil", s(17), jump)
-    caption("...and it jumps", jump, s(18), YELLOW, size=0.048)
+    caption("...and it jumps", jump, s(18), YELLOW, size=0.058)
     caption("Cut a slot in the ring", s(18) + 0.3, s(19))
-    caption("No loop, no current", s(19), s(20), YELLOW, size=0.048)
+    caption("No loop, no current", s(19), s(20), YELLOW, size=0.058)
     for i, text in enumerate(("Phone chargers", "Transformers",
                               "Induction cooktops")):
-        caption(text, s(20) + 1.2 + i * 0.7, s(21), y=0.80 - i * 0.16, size=0.036)
-    caption("Next: why does the ring get hot?", s(21), None, YELLOW, size=0.048)
+        caption(text, s(20) + 1.2 + i * 0.7, s(21), y=0.80 - i * 0.16, size=0.046)
+    caption("Next: why does the ring get hot?", s(21), None, YELLOW, size=0.058)
     for a, b in supply:
         caption("24 V AC: ON", a + 0.01, min(b, tl.total), GREEN, y=0.86,
                 size=0.024, x=0.74)

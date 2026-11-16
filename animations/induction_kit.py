@@ -127,6 +127,9 @@ def build_kit(m):
         m["brass"], l2)
     ball("Bulb", (0.011, 0.011, 0.013), (arm, 0, L2["height"] + 0.024),
          m["bulb"], l2)
+    for sx in (-0.009, 0.009):       # sockets for a meter, at the front
+        cyl("Socket", sx, -(L2["flange"] - 0.008), L2["height"],
+            L2["height"] + 0.008, 0.0045, m["yellow"], l2)
     parts["L2 bulb coil, 150 turns, 6 V bulb"] = (cx + arm, cy, z2 + L2["height"] + 0.024)
 
     # Supply input sockets and the push-to-on switch.
