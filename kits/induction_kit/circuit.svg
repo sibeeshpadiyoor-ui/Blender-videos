@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 960" width="1400" height="960" font-family="DejaVu Sans, Arial, sans-serif">
+<style>
+.w{fill:none;stroke:#222;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.core{fill:none;stroke:#8a5a2b;stroke-width:3.5;stroke-linecap:round}
+.part{fill:#fff;stroke:#222;stroke-width:2.5;stroke-linejoin:round}
+.term{fill:#fff;stroke:#c0392b;stroke-width:3}
+.box{fill:#f6f3ea;stroke:#8a7f66;stroke-width:2;stroke-dasharray:9 6}
+.panel{fill:#f7f9fb;stroke:#b9c3cf;stroke-width:1.5}
+.ring{fill:none;stroke:#7d8791;stroke-width:9}
+</style>
+<rect width="1400" height="960" fill="#fff"/>
+<text x="40" y="44" font-size="26" text-anchor="start" font-weight="bold" fill="#222">Mutual induction + jumping ring kit: circuit diagram</text>
+<text x="40" y="68" font-size="14" text-anchor="start" font-weight="normal" fill="#555">All values are calculated starting points. Confirm them on the prototype before winding a batch.</text>
+<rect x="40" y="92" width="476" height="380" rx="10" class="box"/>
+<text x="56" y="116" font-size="14" text-anchor="start" font-weight="bold" fill="#6b6046">SUPPLY BOX (closed, no student access)</text>
+<circle cx="76" cy="180" r="5" class="term"/>
+<circle cx="76" cy="380" r="5" class="term"/>
+<text x="76" y="164" font-size="15" text-anchor="middle" font-weight="bold" fill="#222">L</text>
+<text x="76" y="408" font-size="15" text-anchor="middle" font-weight="bold" fill="#222">N</text>
+<text x="98" y="272" font-size="15" text-anchor="start" font-weight="normal" fill="#222">230 V AC</text>
+<text x="98" y="292" font-size="15" text-anchor="start" font-weight="normal" fill="#222">mains</text>
+<path d="M81,180 L140,180" class="w"/>
+<rect x="140" y="171" width="60" height="18" class="part"/>
+<path d="M140,180 L200,180" class="w"/>
+<text x="170" y="160" font-size="14" text-anchor="middle" font-weight="bold" fill="#222">F1</text>
+<text x="170" y="208" font-size="13" text-anchor="middle" font-weight="normal" fill="#444">1 A</text>
+<path d="M200,180 L300,180 L300,210" class="w"/>
+<path d="M300,210 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20" class="w"/>
+<path d="M300,350 L300,380 L81,380" class="w"/>
+<path d="M322,205 L322,355" class="core"/>
+<path d="M330,205 L330,355" class="core"/>
+<path d="M352,210 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20" class="w"/>
+<path d="M352,210 L352,180 L400,180" class="w"/>
+<rect x="400" y="171" width="60" height="18" class="part"/>
+<path d="M400,180 L460,180" class="w"/>
+<text x="430" y="160" font-size="14" text-anchor="middle" font-weight="bold" fill="#222">F2</text>
+<text x="430" y="208" font-size="13" text-anchor="middle" font-weight="normal" fill="#444">8 A slow-blow</text>
+<path d="M460,180 L511,180" class="w"/>
+<path d="M352,350 L352,380 L511,380" class="w"/>
+<text x="326" y="410" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">T1 isolating transformer</text>
+<text x="326" y="429" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">230 V : 24 V, 150-200 VA</text>
+<circle cx="516" cy="180" r="5" class="term"/>
+<circle cx="516" cy="380" r="5" class="term"/>
+<text x="532" y="268" font-size="14" text-anchor="start" font-weight="normal" fill="#222">24 V AC</text>
+<text x="532" y="287" font-size="14" text-anchor="start" font-weight="normal" fill="#222">4 mm shrouded</text>
+<text x="532" y="306" font-size="14" text-anchor="start" font-weight="normal" fill="#222">sockets</text>
+<path d="M521,180 L600,180" class="w"/>
+<path d="M660,180 L720,180" class="w"/>
+<circle cx="600" cy="180" r="4" class="part"/>
+<circle cx="660" cy="180" r="4" class="part"/>
+<path d="M604,167 L656,167" class="w"/>
+<path d="M630,167 L630,150" class="w"/>
+<path d="M620,150 L640,150" class="w"/>
+<text x="630" y="118" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">S1</text>
+<text x="630" y="135" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">push-to-on</text>
+<rect x="720" y="170" width="60" height="20" class="part"/>
+<text x="750" y="185" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">t°</text>
+<text x="750" y="212" font-size="13" text-anchor="middle" font-weight="normal" fill="#444">TH thermal cut-out</text>
+<text x="750" y="229" font-size="13" text-anchor="middle" font-weight="normal" fill="#444">fixed on L1</text>
+<path d="M780,180 L860,180 L860,210" class="w"/>
+<path d="M860,210 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20" class="w"/>
+<path d="M860,350 L860,380 L521,380" class="w"/>
+<text x="842" y="262" font-size="14" text-anchor="end" font-weight="normal" fill="#222">L1 primary</text>
+<text x="842" y="281" font-size="14" text-anchor="end" font-weight="normal" fill="#222">300 turns</text>
+<text x="842" y="300" font-size="14" text-anchor="end" font-weight="normal" fill="#222">1.2 mm wire</text>
+<path d="M884,130 L884,430" class="core"/>
+<path d="M892,130 L892,430" class="core"/>
+<text x="888" y="108" font-size="14" text-anchor="middle" font-weight="normal" fill="#8a5a2b">soft-iron core, 25 mm x 300 mm</text>
+<path d="M916,210 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20" class="w"/>
+<path d="M916,210 L916,180 L1130,180 L1130,258" class="w"/>
+<circle cx="1130" cy="280" r="22" class="part"/>
+<path d="M1115,265 L1145,295" class="w"/>
+<path d="M1115,295 L1145,265" class="w"/>
+<path d="M1130,302 L1130,380 L916,380 L916,350" class="w"/>
+<path d="M916,310 L985,310" class="w"/>
+<circle cx="990" cy="310" r="5" class="term"/>
+<text x="1002" y="315" font-size="13" text-anchor="start" font-weight="normal" fill="#444">tap: 100 turns</text>
+<text x="940" y="238" font-size="14" text-anchor="start" font-weight="normal" fill="#222">L2 bulb coil</text>
+<text x="940" y="257" font-size="14" text-anchor="start" font-weight="normal" fill="#222">150 turns, 0.5 mm wire</text>
+<text x="1166" y="268" font-size="14" text-anchor="start" font-weight="normal" fill="#222">6 V bulb, 0.3-0.5 A</text>
+<text x="1166" y="287" font-size="14" text-anchor="start" font-weight="normal" fill="#222">mounted on the bobbin</text>
+<text x="940" y="420" font-size="13" text-anchor="start" font-weight="normal" fill="#444">L2 slides on the core: brightest resting on L1,</text>
+<text x="940" y="437" font-size="13" text-anchor="start" font-weight="normal" fill="#444">dimmer as it is raised.</text>
+<text x="40" y="524" font-size="19" text-anchor="start" font-weight="bold" fill="#222">Swap these in place of L2</text>
+<rect x="40" y="544" width="256" height="370" rx="10" class="panel"/>
+<text x="54" y="572" font-size="15" text-anchor="start" font-weight="bold" fill="#222">A. Measuring coils</text>
+<path d="M70,595 L70,805" class="core"/>
+<path d="M78,595 L78,805" class="core"/>
+<path d="M100,630 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20" class="w"/>
+<path d="M100,630 L100,620 L230,620 L230,688" class="w"/>
+<circle cx="230" cy="710" r="22" class="part"/>
+<text x="230" y="717" font-size="20" text-anchor="middle" font-weight="bold" fill="#222">V</text>
+<path d="M230,732 L230,780 L100,780 L100,770" class="w"/>
+<text x="54" y="840" font-size="13" text-anchor="start" font-weight="normal" fill="#444">L3 300 turns, L4 600 turns,</text>
+<text x="54" y="857" font-size="13" text-anchor="start" font-weight="normal" fill="#444">0.4 mm wire.</text>
+<text x="54" y="874" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Multimeter on AC volts.</text>
+<text x="54" y="891" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Ideal 24 V and 48 V; real lower.</text>
+<rect x="308" y="544" width="256" height="370" rx="10" class="panel"/>
+<text x="322" y="572" font-size="15" text-anchor="start" font-weight="bold" fill="#222">B. LED coil</text>
+<path d="M338,595 L338,805" class="core"/>
+<path d="M346,595 L346,805" class="core"/>
+<path d="M368,630 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20" class="w"/>
+<path d="M368,630 L368,620 L408,620" class="w"/>
+<rect x="408" y="611" width="50" height="18" class="part"/>
+<text x="433" y="604" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">100 Ω</text>
+<path d="M458,620 L528,620" class="w"/>
+<path d="M488,620 L488,701" class="w"/>
+<path d="M477,701 L499,701 L488,719 Z" class="part"/>
+<path d="M477,719 L499,719" class="w"/>
+<path d="M488,719 L488,780" class="w"/>
+<path d="M528,620 L528,701" class="w"/>
+<path d="M517,719 L539,719 L528,701 Z" class="part"/>
+<path d="M517,701 L539,701" class="w"/>
+<path d="M528,719 L528,780" class="w"/>
+<path d="M528,780 L368,780 L368,770" class="w"/>
+<text x="322" y="840" font-size="13" text-anchor="start" font-weight="normal" fill="#444">60-100 turns, 0.4 mm wire.</text>
+<text x="322" y="857" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Two LEDs back to back.</text>
+<text x="322" y="874" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Lights even held well above L1.</text>
+<rect x="576" y="544" width="256" height="370" rx="10" class="panel"/>
+<text x="590" y="572" font-size="15" text-anchor="start" font-weight="bold" fill="#222">C. Jumping ring</text>
+<path d="M700,595 L700,805" class="core"/>
+<path d="M708,595 L708,805" class="core"/>
+<path d="M649,668 a55,15 0 0 0 110,0" class="ring"/>
+<path d="M649,758 a55,15 0 0 0 46,14" class="ring"/>
+<path d="M715,772 a55,15 0 0 0 44,-14" class="ring"/>
+<text x="772" y="664" font-size="13" text-anchor="start" font-weight="normal" fill="#222">whole</text>
+<text x="772" y="754" font-size="13" text-anchor="start" font-weight="normal" fill="#222">split</text>
+<text x="590" y="840" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Aluminium ring = one shorted turn.</text>
+<text x="590" y="857" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Induced current repels it from L1.</text>
+<text x="590" y="874" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Split ring: no current, no jump.</text>
+<rect x="844" y="544" width="256" height="370" rx="10" class="panel"/>
+<text x="858" y="572" font-size="15" text-anchor="start" font-weight="bold" fill="#222">D. Make and break (DC)</text>
+<path d="M872,620 L872,702" class="w"/>
+<path d="M858,702 L886,702" class="w"/>
+<path d="M865,714 L879,714" class="w" stroke-width="5"/>
+<path d="M872,714 L872,800 L940,800 L940,780" class="w"/>
+<path d="M872,620 L888,620" class="w"/>
+<path d="M888,620 L916,606" class="w"/>
+<circle cx="888" cy="620" r="4" class="part"/>
+<circle cx="920" cy="620" r="4" class="part"/>
+<text x="904" y="598" font-size="14" text-anchor="middle" font-weight="bold" fill="#222">K</text>
+<path d="M924,620 L940,620 L940,640" class="w"/>
+<path d="M940,640 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20 a10,10 0 0 1 0,20" class="w"/>
+<path d="M962,600 L962,805" class="core"/>
+<path d="M970,600 L970,805" class="core"/>
+<path d="M992,640 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20 a10,10 0 0 0 0,20" class="w"/>
+<path d="M992,640 L992,620 L1056,620 L1056,688" class="w"/>
+<circle cx="1056" cy="710" r="22" class="part"/>
+<text x="1056" y="717" font-size="20" text-anchor="middle" font-weight="bold" fill="#222">G</text>
+<path d="M1056,732 L1056,800 L992,800 L992,780" class="w"/>
+<text x="892" y="712" font-size="12" text-anchor="start" font-weight="normal" fill="#222">1.5 V</text>
+<text x="934" y="824" font-size="12" text-anchor="end" font-weight="normal" fill="#222">L1</text>
+<text x="998" y="824" font-size="12" text-anchor="start" font-weight="normal" fill="#222">L4</text>
+<text x="858" y="846" font-size="13" text-anchor="start" font-weight="normal" fill="#444">1.5 V D cell and tap key K replace</text>
+<text x="858" y="863" font-size="13" text-anchor="start" font-weight="normal" fill="#444">the 24 V supply. Centre-zero</text>
+<text x="858" y="880" font-size="13" text-anchor="start" font-weight="normal" fill="#444">galvanometer: kicks at ON and OFF.</text>
+<rect x="1112" y="544" width="256" height="370" rx="10" class="panel"/>
+<text x="1126" y="572" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Notes</text>
+<text x="1126" y="602" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Primary circuit is one series</text>
+<text x="1126" y="620" font-size="13" text-anchor="start" font-weight="normal" fill="#444">loop: T1, F2, S1, TH, L1.</text>
+<text x="1126" y="638" font-size="13" text-anchor="start" font-weight="normal" fill="#444"></text>
+<text x="1126" y="656" font-size="13" text-anchor="start" font-weight="normal" fill="#444">S1 is momentary, so L1 is only</text>
+<text x="1126" y="674" font-size="13" text-anchor="start" font-weight="normal" fill="#444">powered while it is pressed.</text>
+<text x="1126" y="692" font-size="13" text-anchor="start" font-weight="normal" fill="#444"></text>
+<text x="1126" y="710" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Secondaries have no electrical</text>
+<text x="1126" y="728" font-size="13" text-anchor="start" font-weight="normal" fill="#444">connection to the supply; they</text>
+<text x="1126" y="746" font-size="13" text-anchor="start" font-weight="normal" fill="#444">are linked only by the core.</text>
+<text x="1126" y="764" font-size="13" text-anchor="start" font-weight="normal" fill="#444"></text>
+<text x="1126" y="782" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Use only L1 as the primary.</text>
+<text x="1126" y="800" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Never feed 24 V into L3 or L4.</text>
+<text x="1126" y="818" font-size="13" text-anchor="start" font-weight="normal" fill="#444"></text>
+<text x="1126" y="836" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Brown double line = iron core.</text>
+<text x="1126" y="854" font-size="13" text-anchor="start" font-weight="normal" fill="#444">Red circles = 4 mm sockets.</text>
+</svg>
