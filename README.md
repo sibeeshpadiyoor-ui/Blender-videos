@@ -63,6 +63,9 @@ Other options:
   one camera move from a rear-wheel close-up, through a chase past two cars,
   to a low frontal shot out of a corner. Meant as a layout, timing and camera
   reference for a video model; retune it with the tables at the top of the file.
+- `induction_kit` - a full-size 3D model of the mutual induction and jumping
+  ring kit on a turntable. `kits/induction_kit/render_views.py` renders the
+  labelled stills and saves the `.blend`.
 - `lorentz_circle` - a charged particle circling in a magnetic field,
   `r = mv / qB`.
 

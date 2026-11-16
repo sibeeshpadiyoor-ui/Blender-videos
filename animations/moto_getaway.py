@@ -18,12 +18,12 @@ code. Built for 16:9:
 import math
 import random
 
-import bmesh
 import bpy
 import numpy as np
-from mathutils import Matrix, Vector
+from mathutils import Vector
 
 from bvid import scene as S
+from bvid.model import ball, box, empty, rod, slabs
 
 SECONDS = 12.0
 
@@ -200,58 +200,6 @@ class Plan:
 # ---------------------------------------------------------------------------
 # Modelling helpers: real-size meshes (no object scale), parented in place.
 # ---------------------------------------------------------------------------
-def _object(name, bm, mat, parent=None, location=(0, 0, 0), rotation=None,
-            smooth_shading=False):
-    mesh = bpy.data.meshes.new(name)
-    bm.to_mesh(mesh)
-    bm.free()
-    if smooth_shading:
-        for poly in mesh.polygons:
-            poly.use_smooth = True
-    if mat is not None:
-        mesh.materials.append(mat)
-    obj = bpy.data.objects.new(name, mesh)
-    bpy.context.scene.collection.objects.link(obj)
-    obj.parent = parent
-    obj.location = location
-    if rotation is not None:
-        obj.rotation_euler = rotation
-    return obj
-
-
-def box(name, size, location, mat, parent=None, rotation=None, taper=1.0):
-    """A box `size` = (x, y, z); `taper` narrows the top face."""
-    bm = bmesh.new()
-    bmesh.ops.create_cube(bm, size=1.0)
-    for v in bm.verts:
-        k = taper if v.co.z > 0 else 1.0
-        v.co = Vector((v.co.x * size[0] * k, v.co.y * size[1] * k,
-                       v.co.z * size[2]))
-    return _object(name, bm, mat, parent, location, rotation)
-
-
-def ball(name, radii, location, mat, parent=None, rotation=None):
-    bm = bmesh.new()
-    bmesh.ops.create_uvsphere(bm, u_segments=20, v_segments=12, radius=1.0)
-    for v in bm.verts:
-        v.co = Vector((v.co.x * radii[0], v.co.y * radii[1], v.co.z * radii[2]))
-    return _object(name, bm, mat, parent, location, rotation, True)
-
-
-def rod(name, start, end, radius, mat, parent=None, flatten=(1.0, 1.0)):
-    """A cylinder from `start` to `end`."""
-    start, end = Vector(start), Vector(end)
-    axis = end - start
-    bm = bmesh.new()
-    bmesh.ops.create_cone(bm, cap_ends=True, segments=16, radius1=radius,
-                          radius2=radius, depth=axis.length)
-    for v in bm.verts:
-        v.co.x *= flatten[0]
-        v.co.y *= flatten[1]
-    return _object(name, bm, mat, parent, (start + end) / 2,
-                   axis.to_track_quat("Z", "Y").to_euler(), True)
-
-
 def ring(name, major, minor, mat, parent=None, width=1.0):
     """A torus around the X axis (a tyre or rim)."""
     bpy.ops.mesh.primitive_torus_add(major_radius=major, minor_radius=minor,
@@ -267,25 +215,6 @@ def ring(name, major, minor, mat, parent=None, width=1.0):
     obj.location = (0, 0, 0)
     obj.rotation_euler = (0, math.pi / 2, 0)
     return obj
-
-
-def empty(name, parent=None, location=(0, 0, 0)):
-    obj = bpy.data.objects.new(name, None)
-    bpy.context.scene.collection.objects.link(obj)
-    obj.empty_display_size = 0.3
-    obj.parent = parent
-    obj.location = location
-    return obj
-
-
-def slabs(name, boxes, mat):
-    """Many boxes ((centre), (size)) merged into one object."""
-    bm = bmesh.new()
-    for centre, size in boxes:
-        bmesh.ops.create_cube(
-            bm, size=1.0,
-            matrix=Matrix.LocRotScale(Vector(centre), None, Vector(size)))
-    return _object(name, bm, mat)
 
 
 # ---------------------------------------------------------------------------
