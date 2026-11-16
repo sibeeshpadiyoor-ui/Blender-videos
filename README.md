@@ -6,12 +6,17 @@ re-frames itself for vertical or horizontal video.
 
 ## Setup
 
-You need Python 3.13, [ffmpeg](https://ffmpeg.org/download.html), and Blender's
-Python module:
+You need Python 3.13, [ffmpeg](https://ffmpeg.org/download.html), Blender's
+Python module and the narration packages:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+Narration uses the channel voice, Kokoro `am_michael`, and runs offline. Download
+`kokoro-v1.0.onnx` and `voices-v1.0.bin` from the
+[kokoro-onnx model release](https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0)
+into `models/` (not committed; about 350 MB).
 
 Or skip the pip install and use a normal Blender (5.1+) install:
 

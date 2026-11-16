@@ -1,0 +1,87 @@
+1
+00:00:00,500 --> 00:00:02,383
+This bulb has no battery.
+
+2
+00:00:02,783 --> 00:00:05,116
+No wire joins it to the supply.
+
+3
+00:00:05,516 --> 00:00:07,267
+So why is it glowing?
+
+4
+00:00:07,667 --> 00:00:13,832
+The lower coil carries alternating current, which goes back and forth fifty times a second.
+
+5
+00:00:14,232 --> 00:00:18,364
+So its magnetic field keeps growing, shrinking and reversing.
+
+6
+00:00:18,764 --> 00:00:22,074
+The iron core carries that changing field upward.
+
+7
+00:00:22,474 --> 00:00:26,979
+A changing magnetic field through a coil pushes a current around it.
+
+8
+00:00:27,379 --> 00:00:29,802
+That is electromagnetic induction.
+
+9
+00:00:30,202 --> 00:00:34,685
+One coil drives the other without touching it: mutual induction.
+
+10
+00:00:35,085 --> 00:00:38,461
+With a steady current from a cell, nothing happens.
+
+11
+00:00:38,861 --> 00:00:44,099
+The needle kicks only at the moment we switch on, and again when we switch off.
+
+12
+00:00:44,499 --> 00:00:46,404
+No change, no current.
+
+13
+00:00:46,804 --> 00:00:51,401
+Lift the coil and the bulb dims, because less of the field reaches it.
+
+14
+00:00:51,801 --> 00:00:55,348
+Double the turns, and the voltage roughly doubles.
+
+15
+00:00:55,748 --> 00:00:57,818
+That is how a transformer works.
+
+16
+00:00:58,218 --> 00:00:59,987
+Now an aluminium ring.
+
+17
+00:01:00,387 --> 00:01:02,615
+It is a coil with just one turn.
+
+18
+00:01:03,015 --> 00:01:08,413
+The induced current makes the ring a magnet that opposes the coil, and it jumps.
+
+19
+00:01:08,813 --> 00:01:11,314
+Cut a slot in the ring and it stays put.
+
+20
+00:01:11,714 --> 00:01:14,908
+No complete path, no current, no force.
+
+21
+00:01:15,308 --> 00:01:19,715
+Chargers, transformers and induction cooktops all use this.
+
+22
+00:01:20,115 --> 00:01:22,315
+Next: why does the ring get hot?

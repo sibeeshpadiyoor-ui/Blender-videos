@@ -4,8 +4,9 @@
     python kits/induction_kit/make_voiceover.py
 
 Script: scripts/induction_kit/01-mutual-induction-and-jumping-ring.md
-Writes voiceover/narration.wav, voiceover.mp3 and timings.json (when each
-sentence starts, for cueing the animation) next to this file.
+Uses the channel voice set in bvid/narration.py. Writes voiceover.mp3,
+captions.srt and timings.json (when each sentence starts, for cueing the
+animation) into voiceover/ next to this file.
 """
 import json
 import subprocess
@@ -57,8 +58,9 @@ def main():
              "end": round(timeline.end(i), 2), "text": text}
             for i, text in enumerate(NARRATION)]
     (out / "timings.json").write_text(json.dumps(
-        {"voice": narration.VOICE, "total": round(timeline.total, 2),
+        {"voice": narration.VOICE, "speed": narration.SPEED, "total": round(timeline.total, 2),
          "sentences": cues}, indent=2))
+    timeline.write_srt(out / "captions.srt")
     print(f"Saved {mp3} ({timeline.total:.1f} s)")
     for cue in cues:
         print(f'{cue["start"]:6.2f}  {cue["text"]}')

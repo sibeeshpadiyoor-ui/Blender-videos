@@ -4,4 +4,6 @@ __pycache__/
 *.blend1
 .venv/
 kits/induction_kit/voiceover/narration.wav
-kits/induction_kit/voiceover/voice_*
+kits/induction_kit/voiceover/narration_raw.wav
+kits/induction_kit/voiceover/sentences/
+models/
