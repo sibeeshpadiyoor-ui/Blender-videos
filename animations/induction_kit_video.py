@@ -297,6 +297,7 @@ def build(scene, fmt, timeline):
     # --- Leads for the cell experiment ----------------------------------------
     # Cell and tap key feed the primary through the input sockets (the AC
     # leads come out); the galvanometer is joined to the coil on top.
+    # The long leads lie on the table round the board, covering nothing.
     m = {n: bpy.data.materials[n] for n in ("Red", "Black")}
     before = set(bpy.data.objects)
     top, plug = kit.TOP, kit.TOP + 0.006
@@ -305,11 +306,15 @@ def build(scene, fmt, timeline):
                         (0.325, -0.216, 0.011)], 0.0022, m["Red"])
     for name, mat, y, pts in (
             ("KeyToCoil", m["Red"], -0.02,
-             [(0.325, -0.154, 0.017), (0.30, -0.135, 0.035), (0.20, -0.14, 0.05),
-              (0.0, -0.145, 0.05), (-0.13, -0.13, 0.06), (-0.205, -0.07, 0.09)]),
+             [(0.325, -0.154, 0.017), (0.305, -0.150, 0.006),
+              (0.26, -0.149, 0.004), (0.0, -0.149, 0.004),
+              (-0.22, -0.149, 0.004), (-0.243, -0.13, 0.004),
+              (-0.243, -0.05, 0.004), (-0.24, -0.025, 0.05)]),
             ("CellToCoil", m["Black"], 0.02,
-             [(0.295, -0.09, 0.0165), (0.275, -0.08, 0.035), (0.25, -0.035, 0.05),
-              (0.0, -0.03, 0.06), (-0.15, -0.04, 0.07), (-0.19, 0.0, 0.10)])):
+             [(0.295, -0.09, 0.0165), (0.285, -0.10, 0.005),
+              (0.27, -0.14, 0.004), (0.24, -0.158, 0.004), (0.0, -0.158, 0.004),
+              (-0.23, -0.158, 0.004), (-0.253, -0.13, 0.004),
+              (-0.253, -0.02, 0.004), (-0.25, 0.015, 0.05)])):
         kit.cyl(name + "Plug", -0.205, y, plug, plug + 0.03, 0.005, mat)
         cable(name, pts + [(-0.205, y, plug + 0.07), (-0.205, y, plug + 0.03)],
               0.0022, mat)
