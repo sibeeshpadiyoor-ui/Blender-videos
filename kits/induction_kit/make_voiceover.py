@@ -16,37 +16,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1]))
 
+from animations.induction_kit_video import NARRATION  # noqa: E402
 from bvid import narration  # noqa: E402
-
-NARRATION = [
-    "This bulb has no battery.",                                          # 0
-    "No wire joins it to the supply.",                                    # 1
-    "So why is it glowing?",                                              # 2
-    "The lower coil carries alternating current, which goes back and "
-    "forth fifty times a second.",                                        # 3
-    "So its magnetic field keeps growing, shrinking and reversing.",      # 4
-    "The iron core carries that changing field upward.",                  # 5
-    "A changing magnetic field through a coil pushes a current around it.",  # 6
-    "That is electromagnetic induction.",                                 # 7
-    "One coil drives the other without touching it: mutual induction.",   # 8
-    "With a steady current from a cell, nothing happens.",                # 9
-    "The needle kicks only at the moment we switch on, and again when "
-    "we switch off.",                                                     # 10
-    "No change, no current.",                                             # 11
-    "Lift the coil and the bulb dims, because less of the field "
-    "reaches it.",                                                        # 12
-    "Double the turns, and the voltage roughly doubles.",                 # 13
-    "That is how a transformer works.",                                   # 14
-    "Now an aluminium ring.",                                             # 15
-    "It is a coil with just one turn.",                                   # 16
-    "The induced current makes the ring a magnet that opposes the coil, "
-    "and it jumps.",                                                      # 17
-    "Cut a slot in the ring and it stays put.",                           # 18
-    "No complete path, no current, no force.",                            # 19
-    "Chargers, transformers and induction cooktops all use this.",        # 20
-    "Next: why does the ring get hot?",                                   # 21
-]
-
 
 def main():
     out = HERE / "voiceover"

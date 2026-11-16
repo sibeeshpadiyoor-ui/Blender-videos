@@ -196,8 +196,8 @@ def build_kit(m):
     g = empty("Galvanometer", location=(0.33, 0.05, 0))
     box("Body", (0.11, 0.055, 0.10), (0, 0, 0.05), m["black"], g)
     box("Face", (0.095, 0.002, 0.06), (0, -0.0285, 0.06), m["dial"], g)
-    box("Needle", (0.0015, 0.001, 0.045), (0.004, -0.030, 0.062), m["red"], g,
-        rotation=(0, math.radians(12), 0))
+    pivot = empty("NeedlePivot", g, (0, -0.030, 0.036))    # turn about Y
+    box("Needle", (0.0015, 0.001, 0.045), (0, 0, 0.0225), m["red"], pivot)
     for x, mat in ((-0.03, m["red"]), (0.03, m["black"])):
         cyl("Terminal", x, 0, 0.10, 0.11, 0.006, mat, g)
     parts["Galvanometer"] = (0.33, 0.05 - 0.03, 0.09)
@@ -209,9 +209,10 @@ def build_kit(m):
     cell.name = "Cell_1V5"
     k = empty("TapKey", location=(0.325, -0.19, 0))
     box("Plate", (0.035, 0.08, 0.008), (0, 0, 0.004), m["black"], k)
-    box("Strip", (0.01, 0.065, 0.0015), (0, 0.004, 0.016), m["brass"], k,
+    arm = empty("KeyArm", k, (0, 0.036, 0.012))      # turn about X to press
+    box("Strip", (0.01, 0.065, 0.0015), (0, -0.032, 0.004), m["brass"], arm,
         rotation=(math.radians(-9), 0, 0))
-    cyl("Knob", 0, -0.026, 0.02, 0.032, 0.008, m["black"], k)
+    cyl("Knob", 0, -0.062, 0.008, 0.020, 0.008, m["black"], arm)
     cyl("Contact", 0, -0.026, 0.008, 0.011, 0.004, m["brass"], k)
     parts["1.5 V cell and tap key"] = (0.325, -0.14, 0.02)
     return parts

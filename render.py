@@ -9,6 +9,7 @@ Also works inside a regular Blender install:
     blender -b -P render.py -- wave_ring --format reels
 """
 import argparse
+import dataclasses
 import importlib
 import pkgutil
 import shutil
@@ -41,6 +42,9 @@ def parse_args():
     p.add_argument("--audio", help="music/voice file to add to the video")
     p.add_argument("--still", type=int, metavar="FRAME",
                    help="render only this frame as a PNG (quick look)")
+    p.add_argument("--fps", type=int,
+                   help="frames per second (default 30); a lower rate "
+                        "renders a long preview faster")
     p.add_argument("--save-blend", action="store_true",
                    help="also save a .blend to open and tweak in Blender")
     p.add_argument("--out", default=str(ROOT / "output"))
@@ -52,6 +56,8 @@ def parse_args():
 def main():
     args = parse_args()
     fmt, quality = FORMATS[args.format], QUALITIES[args.quality]
+    if args.fps:
+        fmt = dataclasses.replace(fmt, fps=args.fps)
     anim = importlib.import_module(f"animations.{args.animation}")
 
     out = Path(args.out)
