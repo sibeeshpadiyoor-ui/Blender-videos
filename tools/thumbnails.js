@@ -181,6 +181,35 @@ const tall4 = base(1080, 1920, `
 </div>
 <div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
 
+// ---- Video 5: "Too many zeros?" -- 3 x 10^9 ----
+const sup = (n) => `<sup style="font-size:.55em;vertical-align:.5em;line-height:0">${n}</sup>`;
+const wide5 = base(1280, 720, `
+<div class="pill" style="left:70px;top:56px">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:44px;top:34px;width:92px">
+<div style="position:absolute;left:70px;top:170px;line-height:1">
+  <div style="font-size:104px;letter-spacing:-3px">TOO MANY</div>
+  <div class="gold" style="font-size:180px;margin-top:6px">zeros?</div>
+</div>
+<div style="position:absolute;left:740px;top:230px;line-height:1.1;font-weight:900">
+  <div style="font-size:104px;color:#FFB703;white-space:nowrap">3 \u00d7 10${sup(9)}</div>
+  <div style="font-size:40px;margin-top:22px;color:#5EE6A8;white-space:nowrap">= 3 000 000 000</div>
+</div>
+<div class="foot" style="bottom:34px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
+const tall5 = base(1080, 1920, `
+<style>.glow{--gx:50%}</style>
+<div class="pill" style="left:50%;transform:translateX(-50%);top:330px;white-space:nowrap">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:60px;top:60px;width:130px">
+<div style="position:absolute;left:0;right:0;top:440px;text-align:center;line-height:1">
+  <div style="font-size:170px;letter-spacing:-3px">TOO MANY</div>
+  <div class="gold" style="font-size:230px;margin-top:4px">zeros?</div>
+</div>
+<div style="position:absolute;left:0;right:0;top:960px;text-align:center;line-height:1.1;font-weight:900">
+  <div style="font-size:170px;color:#FFB703;white-space:nowrap">3 \u00d7 10${sup(9)}</div>
+  <div style="font-size:70px;margin-top:30px;color:#5EE6A8;white-space:nowrap">= 3 000 000 000</div>
+</div>
+<div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
 (async () => {
   const out = path.join(ROOT, "thumbnails");
   fs.mkdirSync(out, { recursive: true });
@@ -192,6 +221,8 @@ const tall4 = base(1080, 1920, `
     ["ch01_01_instagram_cover_1080x1920", tall1, 1080, 1920],
     ["ch01_02_youtube_1280x720", wide2, 1280, 720],
     ["ch01_02_instagram_cover_1080x1920", tall2, 1080, 1920],
+    ["ch01_05_youtube_1280x720", wide5, 1280, 720],
+    ["ch01_05_instagram_cover_1080x1920", tall5, 1080, 1920],
     ["ch01_04_youtube_1280x720", wide4, 1280, 720],
     ["ch01_04_instagram_cover_1080x1920", tall4, 1080, 1920],
     ["ch01_03_youtube_1280x720", wide3, 1280, 720],
