@@ -10,8 +10,8 @@ Corner tag on every video: `FUNDAMENTALS OF PHYSICS • CH 1 • <section>`
 | 1-1 | 2 | Why only seven base quantities? (base vs derived units) | built (preview approved to final) |
 | 1-1 | 3 | What is one meter, exactly? | script ready for review |
 | 1-1 | 4 | How do you change units without mistakes? | script ready for review |
-| 1-1 | 5 | Powers of ten and prefixes (kilo, milli, micro, nano) | script ready for review |
-| 1-2 Time | 6 | What is one second? | |
+| 1-1 | 5 | Powers of ten and prefixes (kilo, milli, micro, nano) | built, preview sent |
+| 1-2 Time | 6 | What is one second? | script ready for review |
 | 1-3 Mass | 7 | What is one kilogram, and what is density? | |
 
 Each video follows the channel's structure: a hook question, one idea explained
