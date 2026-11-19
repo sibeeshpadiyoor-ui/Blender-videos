@@ -1,0 +1,192 @@
+"""Chapter 1, video 6: What is one second?
+
+Script: scripts/ch01/06-what-is-one-second.md
+"""
+import math
+
+import bpy
+
+from bvid import scene as S
+from bvid.brand import SERIES, Stage
+
+NARRATION = [
+    "Answer to last time's challenge. "
+    "How many micrometers are in one millimeter?",                      # 0
+    "One thousand. A millimeter is ten to the minus three meters. "
+    "A micrometer is ten to the minus six. "
+    "So one millimeter holds a thousand micrometers.",                  # 1
+    "Now, today's topic: time. What is one second?",                    # 2
+    "Time answers two questions. When did it happen? "
+    "And how long did it last?",                                        # 3
+    "To measure time, we need something that repeats, again and again. "
+    "For centuries, people used the Earth's spin. "
+    "One turn is one day.",                                             # 4
+    "But the spin is not perfectly steady. The Moon's tides and big "
+    "winds change the length of a day by a few thousandths of a "
+    "second.",                                                          # 5
+    "A better repeating thing is an atom. A cesium atom gives off "
+    "light that wiggles at a fixed rate.",                              # 6
+    "Since 1967, one second is the time taken by nine billion, one "
+    "hundred ninety-two million, six hundred thirty-one thousand, "
+    "seven hundred seventy wiggles of that light.",                     # 7
+    "Atomic clocks are so steady that two of them could run for six "
+    "thousand years before differing by even one second.",              # 8
+    ("Challenge. How many nanoseconds are in one second?", 1.5),        # 9
+    "Next time: what is one kilogram?",                                 # 10
+]
+
+
+def build(scene, fmt, timeline):
+    tl = timeline
+    st = Stage(scene, fmt)
+    st.headline(["What is one"], "Second?",
+                tag=f"{SERIES} • Ch 1 • 1-2 Time",
+                start=tl.start(2) - 0.1, tag_start=0.1)
+    st.subtitles(tl)
+
+    def span(i):
+        return tl.start(i), tl.end(i) - tl.start(i)
+
+    def curve(points, color, bevel=0.04, name="Curve"):
+        data = bpy.data.curves.new(name, "CURVE")
+        data.dimensions = "3D"
+        data.bevel_depth = bevel
+        spline = data.splines.new("POLY")
+        spline.points.add(len(points) - 1)
+        for point, co in zip(spline.points, points):
+            point.co = (*co, 1)
+        obj = bpy.data.objects.new(name, data)
+        scene.collection.objects.link(obj)
+        data.materials.append(st.mat(color))
+        return obj, data
+
+    def draw_on(data, start, end):
+        f0, f1 = 1 + round(start * st.fps), 1 + round(end * st.fps)
+        S.key(data, 1, bevel_factor_end=0.0)
+        S.key(data, f0, bevel_factor_end=0.0)
+        S.key(data, f1, bevel_factor_end=1.0)
+
+    def circle(cx, cz, radius):
+        return [(cx + radius * math.cos(S.TAU * i / 96), 0,
+                 cz + radius * math.sin(S.TAU * i / 96)) for i in range(97)]
+
+    # 0: last video's challenge
+    t0, d = span(0)
+    st.text("LAST VIDEO'S", 0.80, 0.05, "muted", t0, tl.start(1))
+    st.text("CHALLENGE", 0.73, 0.075, "amber", t0, tl.start(1))
+    st.label("1 mm = ? μm", 0, 0.6, 0.95, "gold", t0 + d * 0.4, tl.start(1),
+             font="maths")
+
+    # 1: the answer, 1000 micrometers
+    t1, d = span(1)
+    st.text("THE ANSWER", 0.77, 0.085, "green", t1, tl.start(2))
+    for text, z, color, at in (("1 mm = 10⁻³ m", 1.9, "cyan", 0.25),
+                               ("1 μm = 10⁻⁶ m", 1.0, "amber", 0.4),
+                               ("10⁻³ ÷ 10⁻⁶ = 10³", -0.1, "fg", 0.6),
+                               ("= 1000 μm", -1.3, "green", 0.8)):
+        st.label(text, 0, z, 0.9 if color == "green" else 0.5, color,
+                 t1 + d * at, tl.start(2), font="maths")
+
+    # 3: two questions, "when?" and "how long?"
+    t3, d = span(3)
+    obj, _ = curve(circle(0, 1.1, 0.6), "cyan", 0.04, "Clock")
+    st.show(obj, t3 + d * 0.1, tl.start(4))
+    st.label("WHEN?", 0, 2.3, 0.7, "cyan", t3 + d * 0.1, tl.start(4))
+    st.label("HOW LONG?", 0, -0.3, 0.7, "amber", t3 + d * 0.55, tl.start(4))
+    for n in range(3):
+        st.box(0.95, 0.2, -1.0 + n, -1.2, "amber", t3 + d * (0.7 + 0.08 * n),
+               tl.start(4))
+    for x in (-1.5, 1.5):
+        st.box(0.05, 0.6, x, -1.2, "fg", t3 + d * 0.65, tl.start(4))
+
+    # 4: the Earth's spin, one turn is a day
+    t4, d = span(4)
+    cx, cz, r = 0.0, 0.9, 1.2
+    bpy.ops.mesh.primitive_circle_add(vertices=96, radius=r, fill_type="NGON",
+                                      rotation=(math.pi / 2, 0, 0),
+                                      location=(cx, 0.04, cz))
+    disk = bpy.context.object
+    disk.data.materials.append(st.mat("#13265F"))
+    st.show(disk, t4 + 0.2, tl.start(5))
+    ring, _ = curve(circle(cx, cz, r), "cyan", 0.03, "Earth")
+    st.show(ring, t4 + 0.2, tl.start(5))
+    angle0 = math.pi / 2
+    dot = S.add_box(0.28, 0.28, (cx, -0.1, cz + r), st.mat("yellow"))
+    start_turn, end_turn = t4 + d * 0.45, t4 + d * 0.9
+    st.show(dot, t4 + d * 0.4, tl.start(5))
+    steps = 12
+    for k in range(1, steps + 1):
+        a = angle0 - S.TAU * k / steps
+        S.move(dot, start_turn + (end_turn - start_turn) * (k - 1) / steps,
+               start_turn + (end_turn - start_turn) * k / steps,
+               (cx + r * math.cos(a), -0.1, cz + r * math.sin(a)), st.fps)
+    st.label("1 turn = 1 day", 0, -1.2, 0.5, "fg", t4 + d * 0.6, tl.start(5),
+             font="body")
+
+    # 5: the spin is not perfectly steady
+    t5, d = span(5)
+    st.label("not perfectly steady", 0, 1.9, 0.45, "pink", t5 + 0.3,
+             tl.start(6), font="body")
+    st.label("the length of a day changes by", 0, 0.5, 0.32, "fg",
+             t5 + d * 0.35, tl.start(6), font="body")
+    st.label("a few ms", 0, -0.6, 1.0, "amber", t5 + d * 0.6, tl.start(6),
+             font="maths")
+    st.label("(thousandths of a second)", 0, -1.5, 0.28, "muted",
+             t5 + d * 0.7, tl.start(6), font="body")
+
+    # 6: a cesium atom and its light
+    t6, d = span(6)
+    atom = st.box(0.7, 0.7, -1.8, 1.2, "yellow", t6 + 0.3, tl.start(7))
+    st.label("cesium-133 atom", -1.0, 0.3, 0.3, "yellow", t6 + d * 0.3,
+             tl.start(7), font="body")
+    wave, wave_data = curve(
+        [(-1.3 + 3.4 * i / 240, 0, 1.2 + 0.3 * math.sin(S.TAU * 6 * i / 240))
+         for i in range(241)], "cyan", 0.045, "Light")
+    st.show(wave, 0.0, tl.start(7))
+    draw_on(wave_data, t6 + d * 0.4, t6 + d * 0.8)
+    st.label("light that wiggles", 0.4, -0.5, 0.4, "cyan", t6 + d * 0.65,
+             tl.start(7), font="body")
+    st.label("at a fixed rate", 0.4, -1.1, 0.4, "fg", t6 + d * 0.8,
+             tl.start(7), font="body")
+
+    # 7: the 1967 definition
+    t7, d = span(7)
+    st.label("1967", 0, 2.4, 0.7, "gold", t7 + 0.2, tl.start(8), font="serif")
+    wave2, wave2_data = curve(
+        [(-2.0 + 4.0 * i / 480, 0,
+          1.3 + 0.25 * math.sin(S.TAU * 30 * i / 480))
+         for i in range(481)], "cyan", 0.035, "Wiggles")
+    st.show(wave2, 0.0, tl.start(8))
+    draw_on(wave2_data, t7 + 0.4, t7 + d * 0.8)
+    st.label("9 192 631 770", 0, 0.1, 0.65, "gold", t7 + d * 0.5,
+             tl.start(8), font="maths")
+    st.label("wiggles", 0, -0.6, 0.4, "fg", t7 + d * 0.6, tl.start(8),
+             font="body")
+    st.label("= 1 second", 0, -1.5, 0.75, "green", t7 + d * 0.8, tl.start(8),
+             font="maths")
+
+    # 8: atomic clocks are very steady
+    t8, d = span(8)
+    st.label("6000 years", 0, 1.6, 1.0, "gold", t8 + 0.3, tl.start(9),
+             font="serif")
+    st.label("two atomic clocks", 0, 0.5, 0.4, "fg", t8 + d * 0.3,
+             tl.start(9), font="body")
+    st.label("less than 1 s apart", 0, -0.5, 0.5, "green", t8 + d * 0.55,
+             tl.start(9), font="body")
+    st.label("(in principle)", 0, -1.3, 0.26, "muted", t8 + d * 0.7,
+             tl.start(9), font="body")
+
+    # 9: the challenge
+    t9, d = span(9)
+    st.label("CHALLENGE", 0, 2.4, 0.38, "amber", t9, tl.start(10))
+    st.label("How many nanoseconds", 0, 1.5, 0.34, "fg", t9 + d * 0.2,
+             tl.start(10), font="body")
+    st.label("in one second?", 0, 0.95, 0.34, "fg", t9 + d * 0.35,
+             tl.start(10), font="body")
+    st.label("1 s = ? ns", 0, -0.5, 1.0, "gold", t9 + d * 0.55, tl.start(10),
+             font="maths")
+
+    # 10: next time
+    t10 = tl.start(10)
+    st.label("NEXT", 0, 0.8, 0.28, "muted", t10 + 0.3, font="body")
+    st.label("One kilogram", 0, -0.1, 0.8, "gold", t10 + 0.6, font="serif")
