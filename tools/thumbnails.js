@@ -210,6 +210,37 @@ const tall5 = base(1080, 1920, `
 </div>
 <div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
 
+// ---- Video 6: "Who decides 1 second?" -- a clock ----
+const clock = (x, y, d) => `
+<svg style="position:absolute;left:${x}px;top:${y}px" width="${d}" height="${d}" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="92" fill="none" stroke="#4CC9F0" stroke-width="7"/>
+  ${[...Array(12).keys()].map(i => { const a = i * Math.PI / 6; return `<line x1="${100 + 80 * Math.sin(a)}" y1="${100 - 80 * Math.cos(a)}" x2="${100 + 90 * Math.sin(a)}" y2="${100 - 90 * Math.cos(a)}" stroke="#4CC9F0" stroke-width="5"/>`; }).join("")}
+  <line x1="100" y1="100" x2="100" y2="28" stroke="#FFB703" stroke-width="9" stroke-linecap="round"/>
+  <line x1="100" y1="100" x2="138" y2="122" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="100" cy="100" r="9" fill="#FFB703"/>
+</svg>`;
+
+const wide6 = base(1280, 720, `
+<div class="pill" style="left:70px;top:56px">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:44px;top:34px;width:92px">
+<div style="position:absolute;left:70px;top:170px;line-height:1">
+  <div style="font-size:104px;letter-spacing:-3px">WHO DECIDES</div>
+  <div class="gold" style="font-size:180px;margin-top:6px">1 second?</div>
+</div>
+${clock(800, 180, 360)}
+<div class="foot" style="bottom:34px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
+const tall6 = base(1080, 1920, `
+<style>.glow{--gx:50%}</style>
+<div class="pill" style="left:50%;transform:translateX(-50%);top:330px;white-space:nowrap">FUNDAMENTALS OF PHYSICS \u2022 CH 1</div>
+<img class="wm" src="${WM}" style="right:60px;top:60px;width:130px">
+<div style="position:absolute;left:0;right:0;top:440px;text-align:center;line-height:1">
+  <div style="font-size:128px;letter-spacing:-3px">WHO DECIDES</div>
+  <div class="gold" style="font-size:220px;margin-top:4px">1 second?</div>
+</div>
+${clock(330, 930, 420)}
+<div class="foot" style="bottom:300px;font-size:24px">BEYOND THE OBVIOUS PHYSICS</div>`);
+
 (async () => {
   const out = path.join(ROOT, "thumbnails");
   fs.mkdirSync(out, { recursive: true });
@@ -221,6 +252,8 @@ const tall5 = base(1080, 1920, `
     ["ch01_01_instagram_cover_1080x1920", tall1, 1080, 1920],
     ["ch01_02_youtube_1280x720", wide2, 1280, 720],
     ["ch01_02_instagram_cover_1080x1920", tall2, 1080, 1920],
+    ["ch01_06_youtube_1280x720", wide6, 1280, 720],
+    ["ch01_06_instagram_cover_1080x1920", tall6, 1080, 1920],
     ["ch01_05_youtube_1280x720", wide5, 1280, 720],
     ["ch01_05_instagram_cover_1080x1920", tall5, 1080, 1920],
     ["ch01_04_youtube_1280x720", wide4, 1280, 720],
